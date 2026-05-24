@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GameNest Memory Tool | Tutorial</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@500;700;800&display=swap"
+        rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
+    <style>
+        :root {
+            --bg: #05070d;
+            --card: rgba(14, 18, 28, 0.72);
+            --card-border: rgba(255,255,255,0.08);
+            --accent: #00e1ff;
+            --accent-2: #7a00ff;
+            --text: #f5f7ff;
+            --muted: #8e9bb0;
+            --success: #4ade80;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: "Poppins", sans-serif;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .bg-glow {
+            position: fixed;
+            width: 700px;
+            height: 700px;
+            border-radius: 50%;
+            background: radial-gradient(circle,
+                rgba(0,225,255,0.18) 0%,
+                rgba(122,0,255,0.08) 45%,
+                transparent 75%);
+            filter: blur(90px);
+            z-index: -2;
+            animation: pulse 10s infinite alternate;
+        }
+
+        .bg-left {
+            top: -250px;
+            left: -250px;
+        }
+
+        .bg-right {
+            bottom: -300px;
+            right: -300px;
+            animation-direction: alternate-reverse;
+        }
+
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            to {
+                transform: scale(1.15);
+                opacity: 1;
+            }
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 18px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(22px);
+            background: rgba(5,7,13,0.7);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            z-index: 999;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            box-shadow: 0 0 25px rgba(0,225,255,0.35);
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            transition: 0.25s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            text-shadow: 0 0 20px rgba(0,225,255,0.4);
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 140px 5% 80px;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 1050px;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 18px;
+            border-radius: 999px;
+            background: rgba(0,225,255,0.08);
+            border: 1px solid rgba(0,225,255,0.18);
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 28px;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            line-height: 1;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            max-width: 760px;
+            margin: 0 auto;
+            font-size: 1.2rem;
+            color: var(--muted);
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 42px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            padding: 14px 28px;
+            border-radius: 14px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: white;
+            box-shadow: 0 15px 40px rgba(0,225,255,0.18);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 25px 50px rgba(0,225,255,0.25);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-4px);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .warning-box {
+            margin: 80px auto 0;
+            max-width: 920px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 24px;
+            padding: 28px;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            backdrop-filter: blur(12px);
+        }
+
+        .warning-box i {
+            font-size: 1.5rem;
+            color: #facc15;
+        }
+
+        .warning-box h3 {
+            margin-bottom: 8px;
+        }
+
+        .section {
+            padding: 120px 5%;
+            max-width: 1400px;
+            margin: auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 18px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--muted);
+            max-width: 760px;
+            margin: 0 auto 70px;
+            font-size: 1.1rem;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .step-card {
+            position: relative;
+            overflow: hidden;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 28px;
+            padding: 36px;
+            backdrop-filter: blur(18px);
+            transition: 0.35s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0,225,255,0.22);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.45);
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 26px;
+            font-weight: 800;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            box-shadow: 0 15px 35px rgba(0,225,255,0.2);
+        }
+
+        .step-card h3 {
+            margin-bottom: 14px;
+            font-size: 1.5rem;
+        }
+
+        .step-card p {
+            color: var(--muted);
+        }
+
+        .mini-console {
+            margin-top: 22px;
+            background: #06080f;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 18px;
+            padding: 18px;
+            font-size: 0.92rem;
+            color: #a9b4c7;
+            font-family: Consolas, monospace;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.03);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.45);
+        }
+
+        .video-wrapper::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 30px;
+        }
+
+        video {
+            width: 100%;
+            display: block;
+            background: black;
+        }
+
+        .feature-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 22px;
+            margin-top: 60px;
+        }
+
+        .feature-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 22px;
+            padding: 26px;
+        }
+
+        .feature-box i {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .feature-box h4 {
+            margin-bottom: 10px;
+        }
+
+        .feature-box p {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        footer {
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--muted);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.02);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(.2,.8,.2,1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 900px) {
+            .hero h1 {
+                font-size: 3.4rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero h1 {
+                font-size: 2.7rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .warning-box {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow bg-left"></div>
+    <div class="bg-glow bg-right"></div>
+
+    <!-- NAV -->
+    <nav>
+        <div class="logo">
+            <img src="logo/gamenest.ico" alt="GameNest" />
+            <span>GameNest</span>
+        </div>
+
+        <div class="nav-links">
+            <a href="#tutorial">Tutorial</a>
+            <a href="#video">Video</a>
+            <a href="#features">Features</a>
+        </div>
+
+        <a href="#video" class="btn-primary" style="padding: 12px 20px; font-size: 0.85rem;">
+            <i class="fa-solid fa-play"></i>
+            Watch Tutorial
+        </a>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content reveal active">
+            <div class="badge">
+                <i class="fa-solid fa-microchip"></i>
+                MEMORY TOOL GUIDE
+            </div>
+
+            <h1>
+                Learn the <span>GameNest Memory Tool</span><br />
+                in under 2 minutes.
+            </h1>
+
+            <p>
+                A clean, beginner-friendly walkthrough showing how to scan,
+                filter and overwrite values using the GameNest memory editor.
+                Designed for educational and single-player sandbox usage.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="#tutorial" class="btn-primary">
+                    <i class="fa-solid fa-bolt"></i>
+                    Start Tutorial
+                </a>
+
+                <a href="#video" class="btn-secondary">
+                    <i class="fa-solid fa-circle-play"></i>
+                    Watch Video
+                </a>
+            </div>
+
+            <div class="warning-box">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+
+                <div>
+                    <h3>Important Notice</h3>
+                    <p>
+                        Use the memory tool only in offline, sandbox, or self-hosted environments.
+                        Avoid competitive or protected multiplayer environments.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STEPS -->
+    <section class="section" id="tutorial">
+        <h2 class="section-title reveal">
+            Step-by-Step Tutorial
+        </h2>
+
+        <p class="section-subtitle reveal">
+            The workflow is intentionally simple: scan a value, narrow it down,
+            and overwrite it once the correct address is isolated.
+        </p>
+
+        <div class="steps-grid">
+
+            <!-- STEP 1 -->
+            <div class="step-card reveal">
+                <div class="step-number">01</div>
+
+                <h3>Launch Your Game</h3>
+
+                <p>
+                    Start the game first and make sure your current value is visible.
+                    Example values include health, money, ammo, or score.
+                </p>
+
+                <div class="mini-console">
+                    Example Current Value:<br /><br />
+                    Coins = 250
+                </div>
+            </div>
+
+            <!-- STEP 2 -->
+            <div class="step-card reveal">
+                <div class="step-number">02</div>
+
+                <h3>Attach the Memory Tool</h3>
+
+                <p>
+                    Open the GameNest Memory Tool. If the game is running correctly,
+                    it automatically attaches to the detected process.
+                </p>
+
+                <div class="mini-console">
+                    STATUS: Attached (1 PID)
+                </div>
+            </div>
+
+            <!-- STEP 3 -->
+            <div class="step-card reveal">
+                <div class="step-number">03</div>
+
+                <h3>First Scan</h3>
+
+                <p>
+                    Enter the value currently visible in-game and press
+                    <strong>FIRST SCAN</strong>. The scanner searches memory for matches.
+                </p>
+
+                <div class="mini-console">
+                    Enter Value: 250<br />
+                    → FIRST SCAN
+                </div>
+            </div>
+
+            <!-- STEP 4 -->
+            <div class="step-card reveal">
+                <div class="step-number">04</div>
+
+                <h3>Change the Value In-Game</h3>
+
+                <p>
+                    Return to the game and change the value naturally.
+                    Spend coins, take damage, or increase ammo.
+                </p>
+
+                <div class="mini-console">
+                    Coins changed:<br /><br />
+                    250 → 175
+                </div>
+            </div>
+
+            <!-- STEP 5 -->
+            <div class="step-card reveal">
+                <div class="step-number">05</div>
+
+                <h3>Filter Results</h3>
+
+                <p>
+                    Type the updated value and press <strong>NEXT SCAN</strong>.
+                    Repeat until only a few addresses remain.
+                </p>
+
+                <div class="mini-console">
+                    Enter Value: 175<br />
+                    → NEXT SCAN
+                </div>
+            </div>
+
+            <!-- STEP 6 -->
+            <div class="step-card reveal">
+                <div class="step-number">06</div>
+
+                <h3>Overwrite the Value</h3>
+
+                <p>
+                    Enter your desired number in the overwrite field and apply it.
+                    The value updates instantly inside the game.
+                </p>
+
+                <div class="mini-console">
+                    New Value: 999999<br />
+                    → OVERWRITE
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIDEO -->
+    <section class="section" id="video">
+        <h2 class="section-title reveal">
+            Full Video Walkthrough
+        </h2>
+
+        <p class="section-subtitle reveal">
+            Watch the complete tutorial with the integrated cinematic player.
+        </p>
+
+        <div class="video-wrapper reveal">
+            <video controls preload="metadata" poster="thumbnail.jpg">
+                <source src="/cheater_tutorial.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <div class="feature-strip" id="features">
+            <div class="feature-box reveal">
+                <i class="fa-solid fa-gauge-high"></i>
+                <h4>Fast Memory Scanning</h4>
+                <p>
+                    Optimized scanning engine designed for responsive filtering
+                    and low overhead.
+                </p>
+            </div>
+
+            <div class="feature-box reveal">
+                <i class="fa-solid fa-brain"></i>
+                <h4>Automatic Type Detection</h4>
+                <p>
+                    Detects integer, float, and double values automatically.
+                </p>
+            </div>
+
+            <div class="feature-box reveal">
+                <i class="fa-solid fa-layer-group"></i>
+                <h4>Clean User Interface</h4>
+                <p>
+                    Built with a minimal, modern workflow focused on simplicity.
+                </p>
+            </div>
+
+            <div class="feature-box reveal">
+                <i class="fa-solid fa-shield"></i>
+                <h4>Educational Usage</h4>
+                <p>
+                    Ideal for learning memory editing concepts in controlled environments.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>
+            © 2026 GameNest — Memory Tool Tutorial
+        </p>
+    </footer>
+
+    <script>
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal');
+
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 100;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+
+        window.addEventListener('scroll', reveal);
+        reveal();
+    </script>
+</body>
+</html>
