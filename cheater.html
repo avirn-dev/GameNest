@@ -1,14 +1,19 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GameNest | Memory Injector Guide</title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="logo/gamenest.ico" />
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Poppins:wght@400;600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
 
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
     <style>
@@ -42,7 +47,7 @@
             background-position: center;
         }
 
-        /* Glitch & Cyber-Effekte */
+        /* Glitch & Cyber Effects */
         .cyber-grid {
             position: fixed;
             top: 0;
@@ -74,6 +79,16 @@
             color: #fff;
             text-transform: uppercase;
             text-shadow: 0 0 10px var(--neon-cyan);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo img {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
         }
 
         .back-btn {
@@ -87,6 +102,7 @@
             padding: 10px 20px;
             border-radius: 8px;
             background: rgba(255,255,255,0.02);
+            text-decoration: none;
         }
 
         .back-btn:hover {
@@ -141,6 +157,7 @@
             color: #ffcbd8;
             font-size: 0.95rem;
             box-shadow: 0 0 20px rgba(255, 0, 85, 0.05);
+            line-height: 1.5;
         }
 
         .warning-banner i {
@@ -169,7 +186,7 @@
             }
         }
 
-        /* Video Showcase (Fresh Custom Video Player Frame) */
+        /* Video Showcase */
         .video-wrapper {
             position: sticky;
             top: 40px;
@@ -196,6 +213,7 @@
         .hud-dots {
             display: flex;
             gap: 6px;
+            align-items: center;
         }
         .hud-dot {
             width: 8px;
@@ -212,6 +230,48 @@
             border: 1px solid rgba(255,255,255,0.05);
             aspect-ratio: 16/9;
             background: #000;
+        }
+
+        /* Custom Video Overlay */
+        .video-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(3, 5, 8, 0.7);
+            backdrop-filter: blur(4px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-overlay:hover .play-btn {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+        }
+
+        .play-btn {
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-family: "Poppins", sans-serif;
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+
+        .play-btn i {
+            font-size: 1.4rem;
         }
 
         video {
@@ -387,74 +447,87 @@
 
     <div class="cyber-grid"></div>
 
+    <!-- Navigation -->
     <nav>
-        <div class="logo">GameNest</div>
-        <a href="#home" class="back-btn">
+        <div class="logo">
+            <img src="logo/gamenest.ico" alt="GameNest Logo">
+            GameNest
+        </div>
+        <a href="/" class="back-btn">
             <i class="fa-solid fa-arrow-left"></i> Launcher Homepage
         </a>
     </nav>
 
+    <!-- Content -->
     <div class="container">
         <header>
             <h1>Injector Guide</h1>
-            <p>Lerne in unter 60 Sekunden, wie du Werte in deinen Singleplayer-Games live manipulierst.</p>
+            <p>Learn how to manipulate singleplayer game values live in under 60 seconds.</p>
         </header>
 
+        <!-- Warning -->
         <div class="warning-banner">
             <i class="fa-solid fa-triangle-exclamation"></i>
             <div>
-                <strong>WICHTIGER HINWEIS:</strong> Dieses Tool basiert auf Memory-Scanning (RAM-Injektion). Es funktioniert ausschließlich im <strong>Singleplayer</strong> oder auf lokal gehosteten Koop-Servern. Versuche es nicht in Online-Multiplayer-Matches.
+                <strong>IMPORTANT NOTICE:</strong> This tool relies on memory scanning (RAM injection). It exclusively works in <strong>Singleplayer</strong> or on locally hosted Co-op servers. Do not attempt to use it in online multiplayer matches.
             </div>
         </div>
 
+        <!-- Main Grid -->
         <div class="main-grid">
             
+            <!-- Left Side: Steps -->
             <div class="steps-container">
                 
+                <!-- Step 1 -->
                 <div class="step-card active-step" onclick="highlightStep(1)">
                     <div class="step-num">01</div>
                     <div class="step-content">
-                        <h3>Game starten & Verbinden</h3>
-                        <p>Starte dein gewünschtes Spiel ganz normal über GameNest. Beim Öffnen des Memory Editors versucht der Injector automatisch, die Prozess-IDs (<span class="code-inline">PIDs</span>) des Spiels zu greifen. Siehst du oben rechts <span style="color:var(--neon-green)">Attached</span>, steht die Verbindung.</p>
+                        <h3>Launch Game & Attach</h3>
+                        <p>Launch your desired game normally via GameNest. When opening the Memory Editor, the injector will automatically attempt to hook into the game's Process IDs (<span class="code-inline">PIDs</span>). If you see <span style="color:var(--neon-green)">Attached</span> in the top right, the connection is established.</p>
                     </div>
                 </div>
 
+                <!-- Step 2 -->
                 <div class="step-card" onclick="highlightStep(2)">
                     <div class="step-num">02</div>
                     <div class="step-content">
-                        <h3>Der "First Scan"</h3>
-                        <p>Schaue im Spiel auf den Wert, den du ändern willst (z.B. dein aktuelles Gold: <span class="code-inline">100</span>). Tippe genau diese Zahl in das obere Suchfeld des Injectors ein und klicke auf <strong>FIRST SCAN</strong>. Das Tool sucht nun im gesamten RAM nach dieser Zahl.</p>
+                        <h3>The "First Scan"</h3>
+                        <p>Check the game for the value you want to change (e.g., your current gold: <span class="code-inline">100</span>). Type exactly this number into the top input field of the injector and click <strong>FIRST SCAN</strong>. The tool will now search the entire RAM for this number.</p>
                     </div>
                 </div>
 
+                <!-- Step 3 -->
                 <div class="step-card" onclick="highlightStep(3)">
                     <div class="step-num">03</div>
                     <div class="step-content">
-                        <h3>Wert im Spiel verändern</h3>
-                        <p>Gehe zurück ins Spiel und verändere diesen Wert kurz. Kaufe zum Beispiel ein Item, sodass dein Gold von 100 auf <span class="code-inline">85</span> sinkt. Das ist extrem wichtig, damit wir die richtige Speicheradresse herausfiltern können.</p>
+                        <h3>Alter the In-Game Value</h3>
+                        <p>Go back into the game and change this value briefly. For example, buy an item so your gold drops from 100 to <span class="code-inline">85</span>. This is extremely important so we can filter out the correct memory address.</p>
                     </div>
                 </div>
 
+                <!-- Step 4 -->
                 <div class="step-card" onclick="highlightStep(4)">
                     <div class="step-num">04</div>
                     <div class="step-content">
-                        <h3>Filtern & Überschreiben</h3>
-                        <p>Trage den neuen Wert (<span class="code-inline">85</span>) ein und drücke <strong>NEXT SCAN</strong>. Wiederhole das, bis nur noch wenige Treffer übrig sind. Tippe nun unten deinen Wunschwert ein (z.B. <span class="code-inline">999999</span>) und klicke auf <strong>OVERWRITE</strong>. Fertig!</p>
+                        <h3>Filter & Overwrite</h3>
+                        <p>Enter the new value (<span class="code-inline">85</span>) and press <strong>NEXT SCAN</strong>. Repeat this until only a few matches remain. Now type your desired value at the bottom (e.g., <span class="code-inline">999999</span>) and click <strong>OVERWRITE</strong>. Done!</p>
                     </div>
                 </div>
 
+                <!-- Live Simulator Interface Preview -->
                 <div class="app-simulator">
                     <div class="sim-header">
                         <span class="sim-title">MEMORY INJECTOR</span>
                         <span class="sim-status" id="sim-status-tag">Attached (1 PID)</span>
                     </div>
-                    <input type="text" class="sim-input" id="sim-input-val" placeholder="Aktuellen In-Game Wert eingeben..." value="100">
+                    <input type="text" class="sim-input" id="sim-input-val" placeholder="Enter current in-game value..." value="100">
                     <div class="sim-buttons">
                         <button class="sim-btn primary" onclick="simFirstScan()">First Scan</button>
                         <button class="sim-btn" onclick="simNextScan()">Next Scan</button>
                     </div>
                     <div style="display: flex; gap: 10px; margin-bottom: 12px;">
-                        <input type="text" class="sim-input" id="sim-write-val" placeholder="Wunschwert..." style="margin:0;" value="999999">
+                        <input type="text" class="sim-input" id="sim-write-val" placeholder="Desired value..." style="margin:0;" value="999999">
                         <button class="sim-btn danger" style="white-space: nowrap;" onclick="simOverwrite()">Overwrite</button>
                     </div>
                     <div class="sim-console" id="sim-console-log">
@@ -465,6 +538,7 @@
 
             </div>
 
+            <!-- Right Side: Fresh Video Player -->
             <div class="video-wrapper">
                 <div class="video-hud">
                     <div class="hud-dots">
@@ -476,10 +550,17 @@
                     <span style="color: var(--neon-pink)">1080P</span>
                 </div>
                 
-                <div class="video-container">
-                    <video id="tutorial-video" controls autoplay muted loop>
+                <div class="video-container" id="video-container">
+                    <!-- Custom Overlay to bypass Autoplay-Sound restrictions -->
+                    <div class="video-overlay" id="play-overlay">
+                        <div class="play-btn">
+                            <i class="fa-solid fa-play"></i> START TUTORIAL
+                        </div>
+                    </div>
+
+                    <video id="tutorial-video" controls>
                         <source src="https://s0srox08ux8jruig.public.blob.vercel-storage.com/0526%281%29.mp4" type="video/mp4" />
-                        Dein Browser unterstützt dieses Videoformat leider nicht.
+                        Your browser does not support the video tag.
                     </video>
                 </div>
             </div>
@@ -488,11 +569,25 @@
     </div>
 
     <footer>
-        <p>&copy; 2026 GameNest Engineering. All rights reversed. Hack responsible.</p>
+        <p>&copy; 2026 GameNest Engineering. All rights reserved. Hack responsibly.</p>
     </footer>
 
+    <!-- Interactive UI Logic -->
     <script>
-        // Funktion um die Cards visuell zu wechseln
+        // Video Overlay Logic
+        const overlay = document.getElementById('play-overlay');
+        const video = document.getElementById('tutorial-video');
+
+        overlay.addEventListener('click', () => {
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 300);
+            video.volume = 1.0; // Ensure volume is up
+            video.play();
+        });
+
+        // Function to visually switch cards
         function highlightStep(stepNum) {
             const cards = document.querySelectorAll('.step-card');
             cards.forEach((card, idx) => {
@@ -504,7 +599,7 @@
             });
         }
 
-        // Faux App Simulator Logik zur Veranschaulichung für den User
+        // Faux App Simulator Logic
         const consoleLog = document.getElementById('sim-console-log');
         
         function logToSim(text, color="#aaaaaa") {
@@ -514,27 +609,30 @@
 
         function simFirstScan() {
             const val = document.getElementById('sim-input-val').value;
-            logToSim(`Starte Smart Scan für '${val}'...`);
+            if(!val) return;
+            logToSim(`Starting Smart Scan for '${val}'...`);
             setTimeout(() => {
-                logToSim(`Erfolgreich: 420 Treffer im RAM gefunden.`, '#4CAF50');
+                logToSim(`Success: 420 matches found in RAM.`, '#4CAF50');
                 highlightStep(3);
             }, 600);
         }
 
         function simNextScan() {
             const val = document.getElementById('sim-input-val').value;
-            logToSim(`Filtere Adressen nach neuem Wert '${val}'...`);
+            if(!val) return;
+            logToSim(`Filtering addresses by new value '${val}'...`);
             setTimeout(() => {
-                logToSim(`Filter komplett: Noch 1 Adresse verbleibend.`, '#00f0ff');
+                logToSim(`Filter complete: 1 address remaining.`, '#00f0ff');
                 highlightStep(4);
             }, 500);
         }
 
         function simOverwrite() {
             const writeVal = document.getElementById('sim-write-val').value;
-            logToSim(`Injektiere Wunschwert '${writeVal}' in Speicheradresse...`);
+            if(!writeVal) return;
+            logToSim(`Injecting desired value '${writeVal}' into memory address...`);
             setTimeout(() => {
-                logToSim(`ERFOLGREICH: Wert im Spiel manipuliert!`, '#39ff14');
+                logToSim(`SUCCESS: Value manipulated in-game!`, '#39ff14');
             }, 700);
         }
     </script>
