@@ -1,34 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GameNest Memory Tool | Tutorial</title>
+    <title>GameNest | Memory Injector Guide</title>
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@500;700;800&display=swap"
-        rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Poppins:wght@400;600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
 
-    <!-- Font Awesome -->
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
     <style>
         :root {
-            --bg: #05070d;
-            --card: rgba(14, 18, 28, 0.72);
-            --card-border: rgba(255,255,255,0.08);
-            --accent: #00e1ff;
-            --accent-2: #7a00ff;
-            --text: #f5f7ff;
-            --muted: #8e9bb0;
-            --success: #4ade80;
+            --bg-darken: #030508;
+            --bg-card: rgba(10, 12, 22, 0.7);
+            --neon-cyan: #00f0ff;
+            --neon-pink: #ff0055;
+            --neon-green: #39ff14;
+            --text-main: #f1f5f9;
+            --text-muted: #64748b;
+            --cyber-border: rgba(0, 240, 255, 0.15);
         }
 
         * {
@@ -40,669 +32,511 @@
 
         body {
             font-family: "Inter", sans-serif;
-            background: var(--bg);
-            color: var(--text);
+            background-color: var(--bg-darken);
+            color: var(--text-main);
             overflow-x: hidden;
-            line-height: 1.6;
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: center;
         }
 
-        h1,
-        h2,
-        h3,
-        h4 {
-            font-family: "Poppins", sans-serif;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        .bg-glow {
-            position: fixed;
-            width: 700px;
-            height: 700px;
-            border-radius: 50%;
-            background: radial-gradient(circle,
-                rgba(0,225,255,0.18) 0%,
-                rgba(122,0,255,0.08) 45%,
-                transparent 75%);
-            filter: blur(90px);
-            z-index: -2;
-            animation: pulse 10s infinite alternate;
-        }
-
-        .bg-left {
-            top: -250px;
-            left: -250px;
-        }
-
-        .bg-right {
-            bottom: -300px;
-            right: -300px;
-            animation-direction: alternate-reverse;
-        }
-
-        @keyframes pulse {
-            from {
-                transform: scale(1);
-                opacity: 0.7;
-            }
-            to {
-                transform: scale(1.15);
-                opacity: 1;
-            }
-        }
-
-        nav {
+        /* Glitch & Cyber-Effekte */
+        .cyber-grid {
             position: fixed;
             top: 0;
+            left: 0;
             width: 100%;
-            padding: 18px 5%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 0, 85, 0.05), transparent 60%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Navigation */
+        nav {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            padding: 30px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            backdrop-filter: blur(22px);
-            background: rgba(5,7,13,0.7);
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-            z-index: 999;
+            z-index: 100;
         }
 
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.4rem;
+            font-family: "Poppins", sans-serif;
             font-weight: 800;
-            letter-spacing: 0.5px;
+            font-size: 1.6rem;
+            letter-spacing: 2px;
+            color: #fff;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--neon-cyan);
         }
 
-        .logo img {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            box-shadow: 0 0 25px rgba(0,225,255,0.35);
-        }
-
-        .logo span {
-            background: linear-gradient(135deg, #fff, var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-links {
+        .back-btn {
+            color: var(--text-muted);
+            font-weight: 600;
             display: flex;
-            gap: 40px;
-        }
-
-        .nav-links a {
-            color: var(--muted);
-            transition: 0.25s ease;
-            font-weight: 500;
-        }
-
-        .nav-links a:hover {
-            color: white;
-            text-shadow: 0 0 20px rgba(0,225,255,0.4);
-        }
-
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 140px 5% 80px;
-            position: relative;
-        }
-
-        .hero-content {
-            max-width: 1050px;
-            text-align: center;
-        }
-
-        .badge {
-            display: inline-flex;
             align-items: center;
             gap: 10px;
-            padding: 10px 18px;
-            border-radius: 999px;
-            background: rgba(0,225,255,0.08);
-            border: 1px solid rgba(0,225,255,0.18);
-            color: var(--accent);
-            font-size: 0.85rem;
-            font-weight: 700;
-            margin-bottom: 28px;
-            letter-spacing: 1px;
+            transition: all 0.3s;
+            border: 1px solid var(--cyber-border);
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.02);
         }
 
-        .hero h1 {
-            font-size: 5rem;
-            line-height: 1;
-            margin-bottom: 24px;
+        .back-btn:hover {
+            color: var(--neon-cyan);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+            transform: translateX(-5px);
         }
 
-        .hero h1 span {
-            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        /* Layout Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px 5% 60px 5%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        header h1 {
+            font-family: "Poppins", sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #fff, var(--neon-cyan), var(--neon-pink));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
         }
 
-        .hero p {
-            max-width: 760px;
-            margin: 0 auto;
+        header p {
+            color: var(--text-muted);
             font-size: 1.2rem;
-            color: var(--muted);
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        .hero-buttons {
+        /* Warning Banner */
+        .warning-banner {
+            background: rgba(255, 0, 85, 0.1);
+            border: 1px dashed var(--neon-pink);
+            padding: 15px 25px;
+            border-radius: 12px;
             display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 42px;
-            flex-wrap: wrap;
-        }
-
-        .btn-primary,
-        .btn-secondary {
-            padding: 14px 28px;
-            border-radius: 14px;
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
-            transition: 0.3s ease;
-            display: inline-flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
+            max-width: 800px;
+            margin: 0 auto 50px auto;
+            color: #ffcbd8;
+            font-size: 0.95rem;
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.05);
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent), var(--accent-2));
-            color: white;
-            box-shadow: 0 15px 40px rgba(0,225,255,0.18);
+        .warning-banner i {
+            color: var(--neon-pink);
+            font-size: 1.4rem;
+            animation: pulse 1.5s infinite;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 25px 50px rgba(0,225,255,0.25);
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; text-shadow: 0 0 10px var(--neon-pink); }
+            100% { opacity: 0.5; }
         }
 
-        .btn-secondary {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.08);
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            transform: translateY(-4px);
-            background: rgba(255,255,255,0.08);
-        }
-
-        .warning-box {
-            margin: 80px auto 0;
-            max-width: 920px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 24px;
-            padding: 28px;
-            display: flex;
-            gap: 20px;
-            align-items: flex-start;
-            backdrop-filter: blur(12px);
-        }
-
-        .warning-box i {
-            font-size: 1.5rem;
-            color: #facc15;
-        }
-
-        .warning-box h3 {
-            margin-bottom: 8px;
-        }
-
-        .section {
-            padding: 120px 5%;
-            max-width: 1400px;
-            margin: auto;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 3rem;
-            margin-bottom: 18px;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: var(--muted);
-            max-width: 760px;
-            margin: 0 auto 70px;
-            font-size: 1.1rem;
-        }
-
-        .steps-grid {
+        /* Main Content Grid */
+        .main-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: start;
         }
 
-        .step-card {
-            position: relative;
-            overflow: hidden;
-            background: var(--card);
-            border: 1px solid var(--card-border);
-            border-radius: 28px;
-            padding: 36px;
-            backdrop-filter: blur(18px);
-            transition: 0.35s ease;
+        @media (max-width: 1100px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
-        .step-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(0,225,255,0.22);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.45);
-        }
-
-        .step-number {
-            width: 60px;
-            height: 60px;
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 26px;
-            font-weight: 800;
-            font-size: 1.2rem;
-            background: linear-gradient(135deg, var(--accent), var(--accent-2));
-            box-shadow: 0 15px 35px rgba(0,225,255,0.2);
-        }
-
-        .step-card h3 {
-            margin-bottom: 14px;
-            font-size: 1.5rem;
-        }
-
-        .step-card p {
-            color: var(--muted);
-        }
-
-        .mini-console {
-            margin-top: 22px;
-            background: #06080f;
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 18px;
-            padding: 18px;
-            font-size: 0.92rem;
-            color: #a9b4c7;
-            font-family: Consolas, monospace;
-        }
-
+        /* Video Showcase (Fresh Custom Video Player Frame) */
         .video-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 1100px;
-            margin: 0 auto;
-            border-radius: 30px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.08);
-            background: rgba(255,255,255,0.03);
-            box-shadow: 0 40px 80px rgba(0,0,0,0.45);
+            position: sticky;
+            top: 40px;
+            background: var(--bg-card);
+            border: 2px solid var(--cyber-border);
+            border-radius: 24px;
+            padding: 15px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 30px rgba(0, 240, 255, 0.05);
+            backdrop-filter: blur(15px);
         }
 
-        .video-wrapper::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 30px;
+        .video-hud {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 15px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--neon-cyan);
+        }
+
+        .hud-dots {
+            display: flex;
+            gap: 6px;
+        }
+        .hud-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+        }
+        .hud-dot.active { background: var(--neon-pink); animation: pulse 1s infinite;}
+
+        .video-container {
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            aspect-ratio: 16/9;
+            background: #000;
         }
 
         video {
             width: 100%;
-            display: block;
-            background: black;
+            height: 100%;
+            object-fit: cover;
         }
 
-        .feature-strip {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 22px;
-            margin-top: 60px;
+        /* Step-by-Step Cards */
+        .steps-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
         }
 
-        .feature-box {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 22px;
-            padding: 26px;
+        .step-card {
+            background: rgba(15, 19, 32, 0.5);
+            border: 1px solid var(--cyber-border);
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            gap: 25px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            cursor: pointer;
         }
 
-        .feature-box i {
-            font-size: 1.5rem;
-            color: var(--accent);
-            margin-bottom: 16px;
+        .step-card:hover {
+            border-color: var(--neon-cyan);
+            background: rgba(15, 19, 32, 0.8);
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: -10px 10px 30px rgba(0, 240, 255, 0.03);
         }
 
-        .feature-box h4 {
-            margin-bottom: 10px;
+        .step-card.active-step {
+            border-color: var(--neon-pink);
+            background: rgba(255, 0, 85, 0.02);
+            box-shadow: 0 0 30px rgba(255, 0, 85, 0.05);
         }
 
-        .feature-box p {
-            color: var(--muted);
+        .step-num {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1;
+            color: rgba(255, 255, 255, 0.05);
+            transition: color 0.3s;
+        }
+
+        .step-card:hover .step-num {
+            color: var(--neon-cyan);
+        }
+        .step-card.active-step .step-num {
+            color: var(--neon-pink);
+        }
+
+        .step-content h3 {
+            font-family: "Poppins", sans-serif;
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .step-content p {
+            color: var(--text-muted);
             font-size: 0.95rem;
+            line-height: 1.6;
         }
 
+        .code-inline {
+            font-family: 'Share Tech Mono', monospace;
+            background: rgba(0,0,0,0.4);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--neon-cyan);
+            font-size: 0.9rem;
+            border: 1px solid rgba(0,240,255,0.1);
+        }
+
+        /* Live Simulator Box (Faux App Window) */
+        .app-simulator {
+            margin-top: 30px;
+            background: #0d111a;
+            border-radius: 16px;
+            border: 1px solid #222836;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
+        }
+
+        .sim-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #1f2635;
+            padding-bottom: 10px;
+        }
+        .sim-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #8a99ad;
+        }
+        .sim-status {
+            font-size: 0.7rem;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 4px;
+            background: rgba(76, 175, 80, 0.1);
+            color: #4CAF50;
+            border: 1px solid rgba(76, 175, 80, 0.2);
+        }
+        .sim-input {
+            width: 100%;
+            background: #07090f;
+            border: 1px solid #222836;
+            padding: 10px 15px;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            outline: none;
+            transition: border 0.3s;
+        }
+        .sim-input:focus { border-color: #3b82f6; }
+        .sim-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .sim-btn {
+            background: #1e2538;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: background 0.2s;
+        }
+        .sim-btn.primary { background: #3b82f6; }
+        .sim-btn.danger { background: #ef4444; }
+        .sim-btn:hover { opacity: 0.9; }
+        
+        .sim-console {
+            background: #05070a;
+            border-radius: 6px;
+            padding: 12px;
+            height: 100px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.8rem;
+            color: #4CAF50;
+            overflow-y: auto;
+            border: 1px solid #151b26;
+        }
+
+        /* Footer */
         footer {
-            padding: 40px 20px;
+            margin-top: 100px;
             text-align: center;
-            color: var(--muted);
-            border-top: 1px solid rgba(255,255,255,0.06);
-            background: rgba(255,255,255,0.02);
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(.2,.8,.2,1);
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        @media (max-width: 900px) {
-            .hero h1 {
-                font-size: 3.4rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .hero h1 {
-                font-size: 2.7rem;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-            }
-
-            .warning-box {
-                flex-direction: column;
-            }
+            padding: 40px;
+            border-top: 1px solid rgba(255,255,255,0.03);
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-glow bg-left"></div>
-    <div class="bg-glow bg-right"></div>
+    <div class="cyber-grid"></div>
 
-    <!-- NAV -->
     <nav>
-        <div class="logo">
-            <img src="logo/gamenest.ico" alt="GameNest" />
-            <span>GameNest</span>
-        </div>
-
-        <div class="nav-links">
-            <a href="#tutorial">Tutorial</a>
-            <a href="#video">Video</a>
-            <a href="#features">Features</a>
-        </div>
-
-        <a href="#video" class="btn-primary" style="padding: 12px 20px; font-size: 0.85rem;">
-            <i class="fa-solid fa-play"></i>
-            Watch Tutorial
+        <div class="logo">GameNest</div>
+        <a href="#home" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i> Launcher Homepage
         </a>
     </nav>
 
-    <!-- HERO -->
-    <section class="hero">
-        <div class="hero-content reveal active">
-            <div class="badge">
-                <i class="fa-solid fa-microchip"></i>
-                MEMORY TOOL GUIDE
-            </div>
+    <div class="container">
+        <header>
+            <h1>Injector Guide</h1>
+            <p>Lerne in unter 60 Sekunden, wie du Werte in deinen Singleplayer-Games live manipulierst.</p>
+        </header>
 
-            <h1>
-                Learn the <span>GameNest Memory Tool</span><br />
-                in under 2 minutes.
-            </h1>
-
-            <p>
-                A clean, beginner-friendly walkthrough showing how to scan,
-                filter and overwrite values using the GameNest memory editor.
-                Designed for educational and single-player sandbox usage.
-            </p>
-
-            <div class="hero-buttons">
-                <a href="#tutorial" class="btn-primary">
-                    <i class="fa-solid fa-bolt"></i>
-                    Start Tutorial
-                </a>
-
-                <a href="#video" class="btn-secondary">
-                    <i class="fa-solid fa-circle-play"></i>
-                    Watch Video
-                </a>
-            </div>
-
-            <div class="warning-box">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-
-                <div>
-                    <h3>Important Notice</h3>
-                    <p>
-                        Use the memory tool only in offline, sandbox, or self-hosted environments.
-                        Avoid competitive or protected multiplayer environments.
-                    </p>
-                </div>
+        <div class="warning-banner">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <div>
+                <strong>WICHTIGER HINWEIS:</strong> Dieses Tool basiert auf Memory-Scanning (RAM-Injektion). Es funktioniert ausschließlich im <strong>Singleplayer</strong> oder auf lokal gehosteten Koop-Servern. Versuche es nicht in Online-Multiplayer-Matches.
             </div>
         </div>
-    </section>
 
-    <!-- STEPS -->
-    <section class="section" id="tutorial">
-        <h2 class="section-title reveal">
-            Step-by-Step Tutorial
-        </h2>
+        <div class="main-grid">
+            
+            <div class="steps-container">
+                
+                <div class="step-card active-step" onclick="highlightStep(1)">
+                    <div class="step-num">01</div>
+                    <div class="step-content">
+                        <h3>Game starten & Verbinden</h3>
+                        <p>Starte dein gewünschtes Spiel ganz normal über GameNest. Beim Öffnen des Memory Editors versucht der Injector automatisch, die Prozess-IDs (<span class="code-inline">PIDs</span>) des Spiels zu greifen. Siehst du oben rechts <span style="color:var(--neon-green)">Attached</span>, steht die Verbindung.</p>
+                    </div>
+                </div>
 
-        <p class="section-subtitle reveal">
-            The workflow is intentionally simple: scan a value, narrow it down,
-            and overwrite it once the correct address is isolated.
-        </p>
+                <div class="step-card" onclick="highlightStep(2)">
+                    <div class="step-num">02</div>
+                    <div class="step-content">
+                        <h3>Der "First Scan"</h3>
+                        <p>Schaue im Spiel auf den Wert, den du ändern willst (z.B. dein aktuelles Gold: <span class="code-inline">100</span>). Tippe genau diese Zahl in das obere Suchfeld des Injectors ein und klicke auf <strong>FIRST SCAN</strong>. Das Tool sucht nun im gesamten RAM nach dieser Zahl.</p>
+                    </div>
+                </div>
 
-        <div class="steps-grid">
+                <div class="step-card" onclick="highlightStep(3)">
+                    <div class="step-num">03</div>
+                    <div class="step-content">
+                        <h3>Wert im Spiel verändern</h3>
+                        <p>Gehe zurück ins Spiel und verändere diesen Wert kurz. Kaufe zum Beispiel ein Item, sodass dein Gold von 100 auf <span class="code-inline">85</span> sinkt. Das ist extrem wichtig, damit wir die richtige Speicheradresse herausfiltern können.</p>
+                    </div>
+                </div>
 
-            <!-- STEP 1 -->
-            <div class="step-card reveal">
-                <div class="step-number">01</div>
+                <div class="step-card" onclick="highlightStep(4)">
+                    <div class="step-num">04</div>
+                    <div class="step-content">
+                        <h3>Filtern & Überschreiben</h3>
+                        <p>Trage den neuen Wert (<span class="code-inline">85</span>) ein und drücke <strong>NEXT SCAN</strong>. Wiederhole das, bis nur noch wenige Treffer übrig sind. Tippe nun unten deinen Wunschwert ein (z.B. <span class="code-inline">999999</span>) und klicke auf <strong>OVERWRITE</strong>. Fertig!</p>
+                    </div>
+                </div>
 
-                <h3>Launch Your Game</h3>
+                <div class="app-simulator">
+                    <div class="sim-header">
+                        <span class="sim-title">MEMORY INJECTOR</span>
+                        <span class="sim-status" id="sim-status-tag">Attached (1 PID)</span>
+                    </div>
+                    <input type="text" class="sim-input" id="sim-input-val" placeholder="Aktuellen In-Game Wert eingeben..." value="100">
+                    <div class="sim-buttons">
+                        <button class="sim-btn primary" onclick="simFirstScan()">First Scan</button>
+                        <button class="sim-btn" onclick="simNextScan()">Next Scan</button>
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-bottom: 12px;">
+                        <input type="text" class="sim-input" id="sim-write-val" placeholder="Wunschwert..." style="margin:0;" value="999999">
+                        <button class="sim-btn danger" style="white-space: nowrap;" onclick="simOverwrite()">Overwrite</button>
+                    </div>
+                    <div class="sim-console" id="sim-console-log">
+                        > Initialized Auto-Type Scanner for your Game.<br>
+                        > Ready for First Scan.
+                    </div>
+                </div>
 
-                <p>
-                    Start the game first and make sure your current value is visible.
-                    Example values include health, money, ammo, or score.
-                </p>
+            </div>
 
-                <div class="mini-console">
-                    Example Current Value:<br /><br />
-                    Coins = 250
+            <div class="video-wrapper">
+                <div class="video-hud">
+                    <div class="hud-dots">
+                        <div class="hud-dot active"></div>
+                        <div class="hud-dot"></div>
+                        <div class="hud-dot"></div>
+                    </div>
+                    <span>LIVE_TUTORIAL.MP4 // STREAMING</span>
+                    <span style="color: var(--neon-pink)">1080P</span>
+                </div>
+                
+                <div class="video-container">
+                    <video id="tutorial-video" controls autoplay muted loop>
+                        <source src="https://s0srox08ux8jruig.public.blob.vercel-storage.com/0526%281%29.mp4" type="video/mp4" />
+                        Dein Browser unterstützt dieses Videoformat leider nicht.
+                    </video>
                 </div>
             </div>
 
-            <!-- STEP 2 -->
-            <div class="step-card reveal">
-                <div class="step-number">02</div>
-
-                <h3>Attach the Memory Tool</h3>
-
-                <p>
-                    Open the GameNest Memory Tool. If the game is running correctly,
-                    it automatically attaches to the detected process.
-                </p>
-
-                <div class="mini-console">
-                    STATUS: Attached (1 PID)
-                </div>
-            </div>
-
-            <!-- STEP 3 -->
-            <div class="step-card reveal">
-                <div class="step-number">03</div>
-
-                <h3>First Scan</h3>
-
-                <p>
-                    Enter the value currently visible in-game and press
-                    <strong>FIRST SCAN</strong>. The scanner searches memory for matches.
-                </p>
-
-                <div class="mini-console">
-                    Enter Value: 250<br />
-                    → FIRST SCAN
-                </div>
-            </div>
-
-            <!-- STEP 4 -->
-            <div class="step-card reveal">
-                <div class="step-number">04</div>
-
-                <h3>Change the Value In-Game</h3>
-
-                <p>
-                    Return to the game and change the value naturally.
-                    Spend coins, take damage, or increase ammo.
-                </p>
-
-                <div class="mini-console">
-                    Coins changed:<br /><br />
-                    250 → 175
-                </div>
-            </div>
-
-            <!-- STEP 5 -->
-            <div class="step-card reveal">
-                <div class="step-number">05</div>
-
-                <h3>Filter Results</h3>
-
-                <p>
-                    Type the updated value and press <strong>NEXT SCAN</strong>.
-                    Repeat until only a few addresses remain.
-                </p>
-
-                <div class="mini-console">
-                    Enter Value: 175<br />
-                    → NEXT SCAN
-                </div>
-            </div>
-
-            <!-- STEP 6 -->
-            <div class="step-card reveal">
-                <div class="step-number">06</div>
-
-                <h3>Overwrite the Value</h3>
-
-                <p>
-                    Enter your desired number in the overwrite field and apply it.
-                    The value updates instantly inside the game.
-                </p>
-
-                <div class="mini-console">
-                    New Value: 999999<br />
-                    → OVERWRITE
-                </div>
-            </div>
         </div>
-    </section>
-
-    <!-- VIDEO -->
-    <section class="section" id="video">
-        <h2 class="section-title reveal">
-            Full Video Walkthrough
-        </h2>
-
-        <p class="section-subtitle reveal">
-            Watch the complete tutorial with the integrated cinematic player.
-        </p>
-
-        <div style="max-width: 800px; margin: 0 auto;">
-  <h2>Schau dir unser Tutorial an</h2>
-  
-  <video 
-    src="https://s0srox08ux8jruig.public.blob.vercel-storage.com/0526%281%29.mp4" 
-    controls 
-    preload="metadata" 
-    style="width: 100%; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);"
-  >
-    Ihr Browser unterstützt das Video-Tag nicht.
-  </video>
-</div>
-
-        <div class="feature-strip" id="features">
-            <div class="feature-box reveal">
-                <i class="fa-solid fa-gauge-high"></i>
-                <h4>Fast Memory Scanning</h4>
-                <p>
-                    Optimized scanning engine designed for responsive filtering
-                    and low overhead.
-                </p>
-            </div>
-
-            <div class="feature-box reveal">
-                <i class="fa-solid fa-brain"></i>
-                <h4>Automatic Type Detection</h4>
-                <p>
-                    Detects integer, float, and double values automatically.
-                </p>
-            </div>
-
-            <div class="feature-box reveal">
-                <i class="fa-solid fa-layer-group"></i>
-                <h4>Clean User Interface</h4>
-                <p>
-                    Built with a minimal, modern workflow focused on simplicity.
-                </p>
-            </div>
-
-            <div class="feature-box reveal">
-                <i class="fa-solid fa-shield"></i>
-                <h4>Educational Usage</h4>
-                <p>
-                    Ideal for learning memory editing concepts in controlled environments.
-                </p>
-            </div>
-        </div>
-    </section>
+    </div>
 
     <footer>
-        <p>
-            © 2026 GameNest — Memory Tool Tutorial
-        </p>
+        <p>&copy; 2026 GameNest Engineering. All rights reversed. Hack responsible.</p>
     </footer>
 
     <script>
-        function reveal() {
-            const reveals = document.querySelectorAll('.reveal');
-
-            for (let i = 0; i < reveals.length; i++) {
-                const windowHeight = window.innerHeight;
-                const elementTop = reveals[i].getBoundingClientRect().top;
-                const elementVisible = 100;
-
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].classList.add('active');
+        // Funktion um die Cards visuell zu wechseln
+        function highlightStep(stepNum) {
+            const cards = document.querySelectorAll('.step-card');
+            cards.forEach((card, idx) => {
+                if (idx === stepNum - 1) {
+                    card.classList.add('active-step');
+                } else {
+                    card.classList.remove('active-step');
                 }
-            }
+            });
         }
 
-        window.addEventListener('scroll', reveal);
-        reveal();
+        // Faux App Simulator Logik zur Veranschaulichung für den User
+        const consoleLog = document.getElementById('sim-console-log');
+        
+        function logToSim(text, color="#aaaaaa") {
+            consoleLog.innerHTML += `<br><span style="color:${color}">> ${text}</span>`;
+            consoleLog.scrollTop = consoleLog.scrollHeight;
+        }
+
+        function simFirstScan() {
+            const val = document.getElementById('sim-input-val').value;
+            logToSim(`Starte Smart Scan für '${val}'...`);
+            setTimeout(() => {
+                logToSim(`Erfolgreich: 420 Treffer im RAM gefunden.`, '#4CAF50');
+                highlightStep(3);
+            }, 600);
+        }
+
+        function simNextScan() {
+            const val = document.getElementById('sim-input-val').value;
+            logToSim(`Filtere Adressen nach neuem Wert '${val}'...`);
+            setTimeout(() => {
+                logToSim(`Filter komplett: Noch 1 Adresse verbleibend.`, '#00f0ff');
+                highlightStep(4);
+            }, 500);
+        }
+
+        function simOverwrite() {
+            const writeVal = document.getElementById('sim-write-val').value;
+            logToSim(`Injektiere Wunschwert '${writeVal}' in Speicheradresse...`);
+            setTimeout(() => {
+                logToSim(`ERFOLGREICH: Wert im Spiel manipuliert!`, '#39ff14');
+            }, 700);
+        }
     </script>
 </body>
 </html>
