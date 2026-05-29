@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GameNest | One Launcher for Everything</title>
 
-    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="logo/gamenest.ico" />
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,7 +14,6 @@
         rel="stylesheet"
     />
 
-    <!-- FontAwesome -->
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -59,7 +56,6 @@
             color: inherit;
         }
 
-        /* Background Glow */
         .bg-glow {
             position: absolute;
             width: 600px;
@@ -102,7 +98,6 @@
             }
         }
 
-        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -157,7 +152,19 @@
             text-shadow: 0 0 10px rgba(0, 225, 255, 0.5);
         }
 
-        /* Buttons */
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--text-main);
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .nav-beta-btn {
+            padding: 10px 20px; 
+            font-size: 0.8rem;
+        }
+
         .btn-primary {
             background: linear-gradient(
                 135deg,
@@ -201,7 +208,6 @@
             border-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -209,12 +215,12 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 0 20px;
+            padding: 120px 20px 40px 20px;
             position: relative;
         }
 
         .badge {
-            display: inline-block; /* GEFIXT */
+            display: inline-block;
             background: rgba(0, 225, 255, 0.1);
             border: 1px solid rgba(0, 225, 255, 0.2);
             color: var(--accent-blue);
@@ -222,14 +228,14 @@
             border-radius: 50px;
             font-size: 0.85rem;
             font-weight: 600;
-            margin: 0 auto 30px auto; /* GEFIXT */
+            margin: 0 auto 30px auto;
             letter-spacing: 1px;
         }
 
         .hero h1 {
             font-size: 4.5rem;
             line-height: 1.1;
-            margin: 0 auto 25px auto; /* GEFIXT */
+            margin: 0 auto 25px auto;
             max-width: 900px;
         }
 
@@ -247,16 +253,15 @@
             font-size: 1.25rem;
             color: var(--text-muted);
             max-width: 700px;
-            margin: 0 auto 40px auto; /* GEFIXT */
+            margin: 0 auto 40px auto;
         }
 
         .hero-buttons {
             display: flex;
             gap: 20px;
-            justify-content: center; /* GEFIXT */
+            justify-content: center;
         }
 
-        /* Features */
         .features {
             padding: 120px 5%;
             max-width: 1400px;
@@ -348,7 +353,6 @@
             line-height: 1.7;
         }
 
-        /* Scroll Animation */
         .reveal {
             opacity: 0;
             transform: translateY(40px);
@@ -361,7 +365,6 @@
             transform: translateY(0);
         }
 
-        /* Footer */
         footer {
             text-align: center;
             padding: 40px 20px;
@@ -372,37 +375,115 @@
             margin-top: 50px;
         }
 
-        /* Responsive */
+        .footer-legal-links {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+        }
+
+        .footer-legal-links a {
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .footer-legal-links a:hover {
+            color: var(--text-main);
+            text-shadow: 0 0 10px rgba(0, 225, 255, 0.5);
+        }
+
+        /* --- MOBILE RESPONSIVE STYLES --- */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 3rem;
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-beta-btn {
+                display: none;
             }
 
             .nav-links {
-                display: none;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 100%;
+                height: 100vh;
+                background: rgba(7, 9, 15, 0.98);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: right 0.4s ease;
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2.6rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+                padding: 0 10px;
             }
 
             .hero-buttons {
                 flex-direction: column;
+                width: 100%;
+                max-width: 280px;
+                margin: 0 auto;    /* Zentriert den Button-Container selbst */
+                align-items: center; /* Zentriert die Buttons im Flex-Container */
             }
 
-            .hero p {
-                padding: 0 20px;
+            .hero-buttons a, 
+            .hero-buttons button {
+                width: 100%;       /* Beide Buttons sind exakt gleich breit */
+                text-align: center;
+            }
+
+            .features {
+                padding: 80px 5%;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-card {
+                padding: 30px;
+            }
+            
+            .bg-glow {
+                width: 320px;
+                height: 320px;
+                filter: blur(40px);
             }
         }
     </style>
 </head>
 
 <body>
-    <!-- Background Glow -->
     <div class="bg-glow"></div>
     <div class="bg-glow bg-glow-right"></div>
 
-    <!-- Navigation -->
     <nav>
         <div class="logo-container">
             <img
                 src="logo/gamenest.ico"
+                alt="GameNest Logo"
             />
             GameNest
         </div>
@@ -413,15 +494,15 @@
             <a href="#download">Download</a>
         </div>
 
-        <button
-            class="btn-primary"
-            style="padding: 10px 20px; font-size: 0.8rem;"
-        >
+        <button class="btn-primary nav-beta-btn">
             Beta Access
         </button>
+
+        <div class="mobile-menu-btn">
+            <i class="fa-solid fa-bars"></i>
+        </div>
     </nav>
 
-    <!-- Hero -->
     <section class="hero" id="home">
         <div class="reveal">
             <div class="badge">
@@ -447,25 +528,23 @@
                     href="https://github.com/avirn-dev/GameNest/releases/download/1.0.0/GameNest.exe"
                     download="GameNest.exe"
                     class="btn-primary"
-                    style="display: inline-flex; align-items: center; gap: 10px;"
+                    style="display: inline-flex; align-items: center; gap: 10px; justify-content: center;"
                 >
                     <i class="fa-solid fa-download"></i>
                     Download Now
                 </a>
 
+                            <a href="/cheater">
                 <button class="btn-secondary">
                     <i class="fa-solid fa-play"></i>
-                    Watch Trailer
+                    Watch Cheater Tutorial
                 </button>
+            </a>
             </div>
         </div>
     </section>
 
-    <!-- Features -->
-    <section
-        class="features"
-        id="features"
-    >
+    <section class="features" id="features">
         <h2 class="section-title reveal">
             Why GameNest?
         </h2>
@@ -478,15 +557,12 @@
         </p>
 
         <div class="features-grid">
-            <!-- Feature 1 -->
             <div class="feature-card reveal">
                 <div class="feature-icon">
                     <i class="fa-brands fa-steam"></i>
                 </div>
 
-                <h3>
-                    Seamless Game Integration
-                </h3>
+                <h3>Seamless Game Integration</h3>
 
                 <p>
                     Automatically detect and
@@ -497,7 +573,6 @@
                 </p>
             </div>
 
-            <!-- Feature 2 -->
             <div
                 class="feature-card reveal"
                 style="transition-delay: 0.1s;"
@@ -506,9 +581,7 @@
                     <i class="fa-solid fa-layer-group"></i>
                 </div>
 
-                <h3>
-                    More Than Just Gaming
-                </h3>
+                <h3>More Than Just Gaming</h3>
 
                 <p>
                     Add applications such as
@@ -520,7 +593,6 @@
                 </p>
             </div>
 
-            <!-- Feature 3 -->
             <div
                 class="feature-card reveal"
                 style="transition-delay: 0.2s;"
@@ -529,9 +601,7 @@
                     <i class="fa-solid fa-bolt"></i>
                 </div>
 
-                <h3>
-                    Optimized Performance
-                </h3>
+                <h3>Optimized Performance</h3>
 
                 <p>
                     Engineered for efficiency.
@@ -545,54 +615,59 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <p>
-            &copy; 2026 GameNest. All rights
-            reserved.
+    <footer> 
+        <p> &copy; 2026 GameNest. All rights reserved. </p> 
+        <p style=" margin-top: 10px; font-size: 0.9rem; color: var(--text-muted); letter-spacing: 0.3px; " > 
+            Developed in the United States. 
         </p>
+        <div class="footer-legal-links">
+            <a href="terms.html">Terms of Service</a>
+            <a href="privacy.html">Privacy Policy</a>
+        </div>
     </footer>
 
-    <!-- Scroll Animations -->
     <script>
         function reveal() {
-            const reveals =
-                document.querySelectorAll(
-                    ".reveal"
-                );
+            const reveals = document.querySelectorAll(".reveal");
 
-            for (
-                let i = 0;
-                i < reveals.length;
-                i++
-            ) {
-                const windowHeight =
-                    window.innerHeight;
-
-                const elementTop =
-                    reveals[i].getBoundingClientRect()
-                        .top;
-
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
                 const elementVisible = 100;
 
-                if (
-                    elementTop <
-                    windowHeight -
-                        elementVisible
-                ) {
-                    reveals[i].classList.add(
-                        "active"
-                    );
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
                 }
             }
         }
 
-        window.addEventListener(
-            "scroll",
-            reveal
-        );
-
+        window.addEventListener("scroll", reveal);
         reveal();
+
+        const mobileMenuBtn = document.querySelector(".mobile-menu-btn");
+        const navLinks = document.querySelector(".nav-links");
+        const navItems = document.querySelectorAll(".nav-links a");
+        const menuIcon = mobileMenuBtn.querySelector("i");
+
+        mobileMenuBtn.addEventListener("click", () => {
+            navLinks.classList.toggle("active");
+            
+            if(navLinks.classList.contains("active")) {
+                menuIcon.classList.remove("fa-bars");
+                menuIcon.classList.add("fa-xmark");
+            } else {
+                menuIcon.classList.remove("fa-xmark");
+                menuIcon.classList.add("fa-bars");
+            }
+        });
+
+        navItems.forEach(item => {
+            item.addEventListener("click", () => {
+                navLinks.classList.remove("active");
+                menuIcon.classList.remove("fa-xmark");
+                menuIcon.classList.add("fa-bars");
+            });
+        });
     </script>
 </body>
 </html>

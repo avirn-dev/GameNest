@@ -5,15 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GameNest | Memory Injector Guide</title>
 
-    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="logo/gamenest.ico" />
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Poppins:wght@400;600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
 
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
     <style>
@@ -47,7 +44,6 @@
             background-position: center;
         }
 
-        /* Glitch & Cyber Effects */
         .cyber-grid {
             position: fixed;
             top: 0;
@@ -59,7 +55,6 @@
             pointer-events: none;
         }
 
-        /* Navigation */
         nav {
             position: absolute;
             top: 0;
@@ -112,7 +107,6 @@
             transform: translateX(-5px);
         }
 
-        /* Layout Container */
         .container {
             max-width: 1400px;
             margin: 0 auto;
@@ -143,7 +137,6 @@
             margin: 0 auto;
         }
 
-        /* Warning Banner */
         .warning-banner {
             background: rgba(255, 0, 85, 0.1);
             border: 1px dashed var(--neon-pink);
@@ -172,7 +165,6 @@
             100% { opacity: 0.5; }
         }
 
-        /* Main Content Grid */
         .main-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -186,7 +178,6 @@
             }
         }
 
-        /* Video Showcase */
         .video-wrapper {
             position: sticky;
             top: 40px;
@@ -232,7 +223,6 @@
             background: #000;
         }
 
-        /* Custom Video Overlay */
         .video-overlay {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -280,7 +270,6 @@
             object-fit: cover;
         }
 
-        /* Step-by-Step Cards */
         .steps-container {
             display: flex;
             flex-direction: column;
@@ -351,7 +340,6 @@
             border: 1px solid rgba(0,240,255,0.1);
         }
 
-        /* Live Simulator Box (Faux App Window) */
         .app-simulator {
             margin-top: 30px;
             background: #0d111a;
@@ -432,7 +420,6 @@
             border: 1px solid #151b26;
         }
 
-        /* Footer */
         footer {
             margin-top: 100px;
             text-align: center;
@@ -447,10 +434,9 @@
 
     <div class="cyber-grid"></div>
 
-    <!-- Navigation -->
     <nav>
         <div class="logo">
-            <img src="logo/gamenest.ico" alt="GameNest Logo">
+            <img src="logo/gamenest.ico">
             GameNest
         </div>
         <a href="/" class="back-btn">
@@ -458,14 +444,12 @@
         </a>
     </nav>
 
-    <!-- Content -->
     <div class="container">
         <header>
             <h1>Injector Guide</h1>
             <p>Learn how to manipulate singleplayer game values live in under 60 seconds.</p>
         </header>
 
-        <!-- Warning -->
         <div class="warning-banner">
             <i class="fa-solid fa-triangle-exclamation"></i>
             <div>
@@ -473,13 +457,10 @@
             </div>
         </div>
 
-        <!-- Main Grid -->
         <div class="main-grid">
             
-            <!-- Left Side: Steps -->
             <div class="steps-container">
                 
-                <!-- Step 1 -->
                 <div class="step-card active-step" onclick="highlightStep(1)">
                     <div class="step-num">01</div>
                     <div class="step-content">
@@ -488,7 +469,6 @@
                     </div>
                 </div>
 
-                <!-- Step 2 -->
                 <div class="step-card" onclick="highlightStep(2)">
                     <div class="step-num">02</div>
                     <div class="step-content">
@@ -497,7 +477,6 @@
                     </div>
                 </div>
 
-                <!-- Step 3 -->
                 <div class="step-card" onclick="highlightStep(3)">
                     <div class="step-num">03</div>
                     <div class="step-content">
@@ -506,7 +485,6 @@
                     </div>
                 </div>
 
-                <!-- Step 4 -->
                 <div class="step-card" onclick="highlightStep(4)">
                     <div class="step-num">04</div>
                     <div class="step-content">
@@ -515,7 +493,6 @@
                     </div>
                 </div>
 
-                <!-- Live Simulator Interface Preview -->
                 <div class="app-simulator">
                     <div class="sim-header">
                         <span class="sim-title">MEMORY INJECTOR</span>
@@ -538,7 +515,6 @@
 
             </div>
 
-            <!-- Right Side: Fresh Video Player -->
             <div class="video-wrapper">
                 <div class="video-hud">
                     <div class="hud-dots">
@@ -551,7 +527,6 @@
                 </div>
                 
                 <div class="video-container" id="video-container">
-                    <!-- Custom Overlay to bypass Autoplay-Sound restrictions -->
                     <div class="video-overlay" id="play-overlay">
                         <div class="play-btn">
                             <i class="fa-solid fa-play"></i> START TUTORIAL
@@ -572,9 +547,7 @@
         <p>&copy; 2026 GameNest Engineering. All rights reserved. Hack responsibly.</p>
     </footer>
 
-    <!-- Interactive UI Logic -->
     <script>
-        // Video Overlay Logic
         const overlay = document.getElementById('play-overlay');
         const video = document.getElementById('tutorial-video');
 
@@ -583,11 +556,10 @@
             setTimeout(() => {
                 overlay.style.display = 'none';
             }, 300);
-            video.volume = 1.0; // Ensure volume is up
+            video.volume = 1.0;
             video.play();
         });
 
-        // Function to visually switch cards
         function highlightStep(stepNum) {
             const cards = document.querySelectorAll('.step-card');
             cards.forEach((card, idx) => {
@@ -599,7 +571,6 @@
             });
         }
 
-        // Faux App Simulator Logic
         const consoleLog = document.getElementById('sim-console-log');
         
         function logToSim(text, color="#aaaaaa") {

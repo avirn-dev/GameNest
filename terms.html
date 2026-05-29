@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Terms of Service | GameNest</title>
+
+    <link rel="icon" type="image/x-icon" href="logo/gamenest.ico" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Poppins:wght@500;700;800&display=swap"
+        rel="stylesheet"
+    />
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+        :root {
+            --bg-dark: #07090f;
+            --bg-card: rgba(20, 24, 34, 0.6);
+            --accent-blue: #00e1ff;
+            --accent-purple: #7000ff;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: "Poppins", sans-serif;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .bg-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(
+                circle,
+                rgba(0, 225, 255, 0.15) 0%,
+                rgba(112, 0, 255, 0.05) 50%,
+                transparent 70%
+            );
+            top: -200px;
+            left: -200px;
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(60px);
+            animation: pulse 8s infinite alternate;
+            pointer-events: none;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(7, 9, 15, 0.95);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(
+                to right,
+                #fff,
+                var(--accent-blue)
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-container img {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+        }
+
+        .nav-back-btn {
+            padding: 10px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-back-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .legal-container {
+            max-width: 900px;
+            margin: 120px auto 80px auto;
+            padding: 0 30px;
+        }
+
+        .legal-header {
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .legal-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            background: linear-gradient(
+                135deg,
+                var(--accent-blue),
+                var(--accent-purple)
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .legal-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .legal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        .legal-content h2 {
+            font-size: 1.6rem;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            color: var(--accent-blue);
+            border-bottom: 2px solid rgba(0, 225, 255, 0.2);
+            padding-bottom: 15px;
+        }
+
+        .legal-content h2:first-child {
+            margin-top: 0;
+        }
+
+        .legal-content h3 {
+            font-size: 1.2rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: var(--text-main);
+        }
+
+        .legal-content p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .legal-content ul,
+        .legal-content ol {
+            margin-left: 25px;
+            margin-bottom: 20px;
+            color: var(--text-muted);
+        }
+
+        .legal-content li {
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        .caps-warning {
+            background: rgba(255, 68, 68, 0.05);
+            border-left: 4px solid #ff4444;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+
+        .caps-warning p {
+            font-weight: 600;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            background: rgba(7, 9, 15, 0.8);
+            margin-top: 80px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+            }
+
+            .logo-container {
+                font-size: 1.2rem;
+            }
+
+            .logo-container img {
+                width: 28px;
+                height: 28px;
+            }
+
+            .nav-back-btn {
+                font-size: 0.75rem;
+                padding: 8px 16px;
+            }
+
+            .legal-container {
+                margin-top: 100px;
+                padding: 0 20px;
+            }
+
+            .legal-header h1 {
+                font-size: 2rem;
+            }
+
+            .legal-content {
+                padding: 30px;
+            }
+
+            .legal-content h2 {
+                font-size: 1.3rem;
+            }
+
+            .legal-content h3 {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-glow"></div>
+
+    <nav>
+        <a href="index.html" class="logo-container">
+            <img src="logo/gamenest.ico" alt="GameNest Logo" />
+            GameNest
+        </a>
+        <a href="index.html" class="nav-back-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Home
+        </a>
+    </nav>
+
+    <div class="legal-container">
+        <div class="legal-header">
+            <h1>Terms of Service</h1>
+            <p>End User License Agreement & Legal Terms</p>
+            <p style="font-size: 0.95rem; margin-top: 15px;">Effective Date: May 29, 2026</p>
+        </div>
+
+        <div class="legal-content">
+            <h2>1. Acceptance of Terms & Reference</h2>
+            <p>By downloading, installing, accessing, or using GameNest Launcher (hereinafter "Software"), including all associated documentation, updates, patches, and related services, you ("User" or "You") hereby acknowledge that you have read, understood, and unconditionally agree to be bound by all terms, conditions, covenants, and limitations contained within this End User License Agreement and Terms of Service ("Agreement"). These terms apply identically to the Software and the website. If you do not agree to all terms herein, you must immediately cease all use of the Software and uninstall it from your system.</p>
+
+            <h2>2. License Grant & Restrictions</h2>
+            <p>The Developer hereby grants You a limited, non-exclusive, non-transferable, non-sublicensable, revocable, worldwide license to use the Software solely for your personal, non-commercial entertainment purposes and solely as expressly permitted under this Agreement. You strictly agree NOT to: (a) decompile, reverse engineer, or disassemble the Software; (b) distribute, rent, or lease the Software; (c) use the Software to infringe upon the intellectual property rights of third-party game developers; (d) remove or alter any copyright notices or proprietary marks.</p>
+
+            <h2>3. STRICT SINGLE-PLAYER LIMITATION & MULTIPLAYER BAN</h2>
+            <p style="font-weight: bold; color: #ff4444;">THE SOFTWARE INCLUDES MEMORY-MODIFICATION AND VALUE-EDITING TOOLS INTENDED EXCLUSIVELY FOR OFFLINE, SINGLE-PLAYER USE.</p>
+            <p>You are STRICTLY PROHIBITED from deploying, activating, or utilizing any modification tools, memory editors, or cheats provided by the Software in any online, multiplayer, matchmaking, competitive ladder, or networked environment. Any attempt to use the Software in multiplayer modes constitutes a material breach of this Agreement, resulting in the immediate and automatic revocation of your license and forfeiture of all protections.</p>
+
+            <div class="caps-warning">
+                <p>🔴 ANY USE IN MULTIPLAYER ENVIRONMENTS CONSTITUTES A MATERIAL BREACH OF THIS CONTRACT AND IMMEDIATELY TERMINATES YOUR LICENSE.</p>
+            </div>
+
+            <h2>4. TOTAL ASSUMPTION OF RISK & NO LIABILITY FOR BANS</h2>
+            <p>You acknowledge that modifying game memory carries inherent risks and may violate the Terms of Service or End User License Agreements of third-party games or platforms. You acknowledge that third-party gaming platforms maintain independent anti-cheat systems (such as VAC, Easy Anti-Cheat, BattlEye, Vanguard, Warden, or other proprietary mechanisms) that explicitly prohibit memory-altering tools.</p>
+            
+            <p style="text-transform: uppercase; font-weight: bold; color: var(--text-main);">YOU ASSUME 100% OF THE RISK ASSOCIATED WITH USING THE SOFTWARE. GAMENEST AND ITS DEVELOPERS SHALL HAVE ABSOLUTELY ZERO LIABILITY FOR ANY THIRD-PARTY GAME BANS, ANTI-CHEAT TRIGGERS, ACCOUNT SUSPENSIONS, HARDWARE IDENTIFICATION (HWID) BANS, IP BANS, LOSS OF IN-GAME PURCHASES, CHARACTER DELETIONS, OR TOTAL ACCOUNT TERMINATIONS.</p>
+
+            <h2>5. LIMITATION OF LIABILITY & WARRANTY DISCLAIMER</h2>
+            <p><strong>THE SOFTWARE IS PROVIDED ON AN "AS-IS" AND "AS-AVAILABLE" BASIS WITHOUT WARRANTY OF ANY KIND, EXPRESS, IMPLIED, OR STATUTORY, INCLUDING BUT NOT LIMITED TO FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.</strong></p>
+
+            <p style="text-transform: uppercase; font-weight: bold; color: var(--text-main);">TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL GAMENEST OR ITS DEVELOPERS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, PUNITIVE, OR EXEMPLARY DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF DATA, FILE CORRUPTION, SYSTEM DAMAGE, OR REPUTATIONAL HARM. BECAUSE THE SOFTWARE IS PROVIDED COMPLETELY FREE OF CHARGE, THE TOTAL AGGREGATE LIABILITY OF GAMENEST FOR ANY CLAIMS ARISING OUT OF THIS AGREEMENT IS STRICTLY CAPPED AT $0.00 USD. THIS CAP APPLIES CUMULATIVELY TO ALL CLAIMS AND CAUSES OF ACTION.</p>
+
+            <h2>6. Binding Arbitration</h2>
+            <p><strong>ANY AND ALL DISPUTES, CLAIMS, CONTROVERSIES, OR CAUSES OF ACTION ARISING OUT OF THIS AGREEMENT SHALL BE RESOLVED EXCLUSIVELY BY FINAL AND BINDING ARBITRATION UNDER THE FEDERAL ARBITRATION ACT (FAA) IN THE UNITED STATES, AND NOT BY COURT ACTION, JURY TRIAL, OR ANY OTHER JUDICIAL PROCEEDING.</strong></p>
+            <p>Arbitration shall be administered by a single neutral arbitrator with expertise in software licensing and gaming law in accordance with the American Arbitration Association (AAA) Commercial Arbitration Rules.</p>
+
+            <h2>7. Class Action Waiver and Jury Trial Waiver</h2>
+            <p style="text-transform: uppercase; font-weight: bold; color: var(--accent-blue);">PLEASE READ THIS SECTION CAREFULLY. IT AFFECTS YOUR LEGAL RIGHTS, INCLUDING YOUR RIGHT TO FILE A LAWSUIT IN COURT.</p>
+            <p><strong>YOU AGREE THAT YOU MAY BRING CLAIMS AGAINST THE DEVELOPER ONLY IN YOUR INDIVIDUAL CAPACITY AND NOT ON BEHALF OF, OR JOINTLY WITH, ANY OTHER PERSON. YOU EXPRESSLY WAIVE YOUR RIGHT TO PARTICIPATE AS A PLAINTIFF OR CLASS MEMBER IN ANY PURPORTED CLASS ACTION, CLASS PROCEEDING, REPRESENTATIVE ACTION, OR PRIVATE ATTORNEY GENERAL ACTION. YOU KNOWINGLY WAIVE YOUR RIGHT TO A TRIAL BY JURY IN ANY LEGAL PROCEEDING.</strong></p>
+
+            <h2>8. Indemnification</h2>
+            <p>You agree to indemnify and hold harmless the Developer from and against any and all third-party claims, damages, losses, costs, and expenses (including attorney fees) arising from: (a) your use or misuse of the Software; (b) your violation of this Agreement or applicable law; (c) your violation of any third-party rights or gaming platform terms of service.</p>
+
+            <h2>9. Age Requirement & COPPA Compliance</h2>
+            <p>You must be at least 13 years of age to use this Software. The Software does not knowingly collect or process data from children under 13. If you are under 13, you are strictly prohibited from using the Software. By accepting these terms, you affirm that you meet this requirement.</p>
+
+            <h2>10. Intellectual Property Rights</h2>
+            <p>All intellectual property rights, titles, and interests in and to the Software are and shall remain the exclusive property of the Developer. You acquire no ownership rights in the Software; you acquire only the limited, temporary license granted herein.</p>
+
+            <h2>11. Termination</h2>
+            <p>The Developer may terminate this Agreement and your license immediately and without notice at any time, for any reason, including but not limited to your violation of any term of this Agreement, applicable law, or deployment of the tool in multiplayer environments. Upon termination, you must immediately destroy all copies of the Software.</p>
+
+            <h2>12. Entire Agreement & Amendments</h2>
+            <p>This Agreement, together with the Privacy Policy, constitutes the entire agreement between You and the Developer regarding the Software and supersedes all prior agreements. The Developer reserves the right to amend or modify this Agreement at any time. Your continued use of the Software following amendments constitutes your acceptance of such changes.</p>
+
+            <h2>13. Governing Law</h2>
+            <p>This Agreement and any disputes arising out of it shall be governed by and construed in accordance with the laws of the United States, and specifically the State of New York, without regard to its conflicts of law principles.</p>
+
+            <p style="margin-top: 50px; padding-top: 30px; border-top: 1px solid var(--glass-border); font-size: 0.9rem;">
+                <strong>LAST UPDATED: May 29, 2026</strong>
+                <br><br>
+                By using GameNest, you acknowledge that you have read, understood, and agree to each and every term contained herein. If you do not agree, you must immediately uninstall the Software and cease all use.
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 GameNest. All rights reserved.</p>
+        <p style="margin-top: 10px;">Developed in the United States.</p>
+    </footer>
+</body>
+</html>
