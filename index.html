@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GameNest | Free Game Launcher</title>
+
+    <link rel="icon" type="image/x-icon" href="logo/gamenest_transparent.ico" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;700;800&display=swap"
+        rel="stylesheet"
+    />
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+        :root {
+            --bg-dark: #07090f;
+            --bg-card: rgba(20, 24, 34, 0.6);
+            --accent-blue: #00e1ff;
+            --accent-purple: #7000ff;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        html {
+            scrollbar-gutter: stable;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: "Poppins", sans-serif;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .bg-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(
+                circle,
+                rgba(0, 225, 255, 0.15) 0%,
+                rgba(112, 0, 255, 0.05) 50%,
+                transparent 70%
+            );
+            top: -200px;
+            left: -200px;
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(60px);
+            animation: pulse 8s infinite alternate;
+            pointer-events: none;
+        }
+
+        .bg-glow-right {
+            right: -200px;
+            left: auto;
+            top: 40%;
+            background: radial-gradient(
+                circle,
+                rgba(112, 0, 255, 0.12) 0%,
+                rgba(0, 225, 255, 0.05) 50%,
+                transparent 70%
+            );
+            animation: pulse 10s infinite alternate-reverse;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(7, 9, 15, 0.75);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(
+                to right,
+                #fff,
+                var(--accent-blue)
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-container img {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+            text-shadow: 0 0 10px rgba(0, 225, 255, 0.5);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--text-main);
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .nav-beta-btn {
+            padding: 10px 20px; 
+            font-size: 0.8rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(
+                135deg,
+                var(--accent-blue),
+                var(--accent-purple)
+            );
+            padding: 12px 32px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 225, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px 32px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 20px 40px 20px;
+            position: relative;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(0, 225, 255, 0.1);
+            border: 1px solid rgba(0, 225, 255, 0.2);
+            color: var(--accent-blue);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 0 auto 30px auto;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            line-height: 1.1;
+            margin: 0 auto 25px auto;
+            max-width: 900px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(
+                135deg,
+                var(--accent-blue),
+                var(--accent-purple)
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 40px auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .features {
+            padding: 120px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 70px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(320px, 1fr)
+            );
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.4s ease,
+                border-color 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                var(--accent-blue),
+                transparent
+            );
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0, 225, 255, 0.3);
+            box-shadow: 0 10px 30px
+                rgba(0, 0, 0, 0.5);
+        }
+
+        .feature-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--accent-blue);
+            margin-bottom: 25px;
+            background: rgba(0, 225, 255, 0.1);
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s
+                cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid
+                var(--glass-border);
+            color: var(--text-muted);
+            background: rgba(7, 9, 15, 0.8);
+            margin-top: 50px;
+        }
+
+        .footer-legal-links {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+        }
+
+        .footer-legal-links a {
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .footer-legal-links a:hover {
+            color: var(--text-main);
+            text-shadow: 0 0 10px rgba(0, 225, 255, 0.5);
+        }
+
+        .browser-alert-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(4, 5, 9, 0.85);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .browser-alert-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .browser-alert-box {
+            background: rgba(15, 19, 29, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            max-width: 580px;
+            width: 100%;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), 
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transform: scale(0.9);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .browser-alert-overlay.show .browser-alert-box {
+            transform: scale(1);
+        }
+
+        .browser-alert-box::before {
+            content: "";
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(0, 225, 255, 0.2) 0%, transparent 70%);
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            filter: blur(20px);
+            z-index: 0;
+        }
+
+        .alert-icon-wrap {
+            position: relative;
+            z-index: 1;
+            width: 80px;
+            height: 80px;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            font-size: 2.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            margin: 0 auto 30px auto;
+            box-shadow: 0 0 30px rgba(239, 68, 68, 0.15);
+        }
+
+        .browser-alert-box h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to bottom, #ffffff 60%, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            z-index: 1;
+        }
+
+        .browser-alert-box p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 35px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .browser-alert-box p strong {
+            color: var(--text-main);
+        }
+
+        .browser-suggestion-grid {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .browser-option {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            padding: 20px 10px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .browser-option i {
+            font-size: 1.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .browser-option.firefox i { color: #ff9400; }
+        .browser-option.chrome i { color: #4285f4; }
+        .browser-option.brave i { color: #ff5000; }
+
+        .browser-option span {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-main);
+            letter-spacing: 0.3px;
+        }
+
+        .browser-option:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(0, 225, 255, 0.25);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .browser-option:hover i {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-beta-btn {
+                display: none;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 100%;
+                height: 100vh;
+                background: rgba(7, 9, 15, 0.98);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: right 0.4s ease;
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2.6rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+                padding: 0 10px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+                max-width: 280px;
+                margin: 0 auto;
+                align-items: center;
+            }
+
+            .hero-buttons a, 
+            .hero-buttons button {
+                width: 100%; 
+                text-align: center;
+            }
+
+            .features {
+                padding: 80px 5%;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-card {
+                padding: 30px;
+            }
+            
+            .bg-glow {
+                width: 320px;
+                height: 320px;
+                filter: blur(40px);
+            }
+
+            .browser-alert-box {
+                padding: 40px 20px;
+            }
+
+            .browser-suggestion-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .browser-option {
+                flex-direction: row;
+                justify-content: center;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .browser-alert-box h2 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="browser-alert-overlay" id="edge-security-modal">
+        <div class="browser-alert-box">
+            <div class="alert-icon-wrap">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h2>Browser Compatibility</h2>
+<p>
+    This platform is currently not optimized for Microsoft Edge. 
+    To ensure full functionality and a seamless experience, please use a supported modern browsers like these below:
+</p>
+            
+            <div class="browser-suggestion-grid">
+                <a href="https://www.mozilla.org/firefox/" target="_blank" class="browser-option firefox">
+                    <i class="fa-brands fa-firefox-browser"></i>
+                    <span>Firefox</span>
+                </a>
+                <a href="https://www.google.com/chrome/" target="_blank" class="browser-option chrome">
+                    <i class="fa-brands fa-chrome"></i>
+                    <span>Chrome</span>
+                </a>
+                <a href="https://brave.com/" target="_blank" class="browser-option brave">
+                    <i class="fa-solid fa-earth-americas"></i>
+                    <span>Brave</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-glow"></div>
+    <div class="bg-glow bg-glow-right"></div>
+
+    <nav>
+        <div class="logo-container">
+            <img src="logo/gamenest.ico" />
+            GameNest
+        </div>
+
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#features">Features</a>
+            <a href="#download">Download</a>
+        </div>
+
+        <button class="btn-primary nav-beta-btn">
+            Beta Access
+        </button>
+
+        <div class="mobile-menu-btn">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="reveal">
+            
+            <div class="badge" id="version-badge">
+                Checking for Updates...
+            </div>
+
+            <h1>
+                All your games.<br />
+                <span>One powerful launcher.</span>
+            </h1>
+
+            <p>
+                GameNest integrates your game library, applications, and built-in utility tools into a single, high-performance workspace designed for efficiency.
+            </p>
+
+            <div class="hero-buttons">
+                <a
+                    href="https://github.com/avirn-dev/GameNest/releases/download/1.0.0/GameNestInstaller.exe"
+                    download="GameNestInstaller.exe"
+                    class="btn-primary"
+                    style="display: inline-flex; align-items: center; gap: 10px; justify-content: center;"
+                >
+                    <i class="fa-solid fa-download"></i>
+                    Download Now
+                </a>
+
+                <a href="/cheater">
+                    <button class="btn-secondary">
+                        <i class="fa-solid fa-play"></i>
+                        Watch Tutorial
+                    </button>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <h2 class="section-title reveal">
+            Highlights of GameNest
+        </h2>
+
+        <p class="section-subtitle reveal">
+            A lightweight desktop ecosystem built for seamless library management and technical control.
+        </p>
+
+        <div class="features-grid">
+            <div class="feature-card reveal">
+                <div class="feature-icon">
+                    <div style="position: relative;">
+                        <i class="fa-solid fa-rectangle-ad" style="font-size: 1.3rem; position: absolute; top: -5px; right: -5px; opacity: 0.4;"></i>
+                        <i class="fa-solid fa-ban"></i>
+                    </div>
+                </div>
+
+                <h3>Free & No Ads</h3>
+
+                <p>
+                    An entirely free software solution. GameNest operates without intrusive advertising, pop-ups, background monetization, or user-tracking services.
+                </p>
+            </div>
+
+            <div class="feature-card reveal" style="transition-delay: 0.1s;">
+                <div class="feature-icon">
+                    <div style="position: relative;">
+                        <i class="fa-solid fa-rectangle-ad" style="font-size: 1.3rem; position: absolute; top: -5px; right: -5px; opacity: 0.4;"></i>
+                        <i class="fa-solid fa-ban"></i>
+                    </div>
+                </div>
+
+                <h3>Integrated GameCheater</h3>
+
+                <p>
+                    Includes a built-in memory modifier that allows you to scan system RAM, isolate addresses, and overwrite specific game values in real time.
+                </p>
+            </div>
+
+            <div class="feature-card reveal" style="transition-delay: 0.2s;">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-microchip"></i>
+                </div>
+
+                <h3>Fast & Lightweight</h3>
+
+                <p>
+                    Optimized code baseline that guarantees minimal CPU and RAM usage, ensuring your hardware resources remain fully allocated to your active applications.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer> 
+        <p> &copy; 2026 GameNest. All rights reserved. </p> 
+        <p style=" margin-top: 10px; font-size: 0.9rem; color: var(--text-muted); letter-spacing: 0.3px; "> 
+            Developed in the United States. 
+        </p>
+        <div class="footer-legal-links">
+            <a href="terms.html">Terms of Service</a>
+            <a href="privacy.html">Privacy Policy</a>
+        </div>
+    </footer>
+
+    <script>
+        function checkBrowser() {
+            const userAgent = navigator.userAgent;
+            const isEdge = userAgent.includes("Edg/") || userAgent.includes("Edge/");
+
+            if (isEdge) {
+                const modal = document.getElementById('edge-security-modal');
+                document.body.classList.add('modal-open');
+                modal.classList.add('show');
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', checkBrowser);
+
+        function reveal() {
+            const reveals = document.querySelectorAll(".reveal");
+
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 100;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+
+        window.addEventListener("scroll", reveal);
+        reveal();
+
+        const mobileMenuBtn = document.querySelector(".mobile-menu-btn");
+        const navLinks = document.querySelector(".nav-links");
+        const navItems = document.querySelectorAll(".nav-links a");
+        const menuIcon = mobileMenuBtn.querySelector("i");
+
+        mobileMenuBtn.addEventListener("click", () => {
+            navLinks.classList.toggle("active");
+            
+            if(navLinks.classList.contains("active")) {
+                menuIcon.classList.remove("fa-bars");
+                menuIcon.classList.add("fa-xmark");
+            } else {
+                menuIcon.classList.remove("fa-xmark");
+                menuIcon.classList.add("fa-bars");
+            }
+        });
+
+        navItems.forEach(item => {
+            item.addEventListener("click", () => {
+                navLinks.classList.remove("active");
+                menuIcon.classList.remove("fa-xmark");
+                menuIcon.classList.add("fa-bars");
+            });
+        });
+
+        async function fetchLatestVersion() {
+            try {
+                const response = await fetch('Updates.json');
+                if (!response.ok) {
+                    throw new Error('Konnte Updates.json nicht laden');
+                }
+                const data = await response.json();
+                const versions = Object.keys(data);
+                
+                if (versions.length > 0) {
+                    const latestVersion = versions[0];
+                    const badge = document.getElementById('version-badge');
+                    if (badge) {
+                        badge.textContent = `VERSION ${latestVersion} NOW AVAILABLE`;
+                    }
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', fetchLatestVersion);
+    </script>
+</body>
+</html>

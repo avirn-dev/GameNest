@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Policy | GameNest</title>
+
+    <link rel="icon" type="image/x-icon" href="logo/gamenest.ico" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Poppins:wght@500;700;800&display=swap"
+        rel="stylesheet"
+    />
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+        :root {
+            --bg-dark: #07090f;
+            --bg-card: rgba(20, 24, 34, 0.6);
+            --accent-blue: #00e1ff;
+            --accent-purple: #7000ff;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-family: "Poppins", sans-serif;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .bg-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(
+                circle,
+                rgba(0, 225, 255, 0.15) 0%,
+                rgba(112, 0, 255, 0.05) 50%,
+                transparent 70%
+            );
+            top: -200px;
+            left: -200px;
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(60px);
+            animation: pulse 8s infinite alternate;
+            pointer-events: none;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.7; }
+            100% { transform: scale(1.2); opacity: 1; }
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(7, 9, 15, 0.95);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(to right, #fff, var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-container img {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+        }
+
+        .nav-back-btn {
+            padding: 10px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-back-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .legal-container {
+            max-width: 900px;
+            margin: 120px auto 80px auto;
+            padding: 0 30px;
+        }
+
+        .legal-header {
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .legal-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .legal-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .legal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        .legal-content h2 {
+            font-size: 1.6rem;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            color: var(--accent-blue);
+            border-bottom: 2px solid rgba(0, 225, 255, 0.2);
+            padding-bottom: 15px;
+        }
+
+        .legal-content h2:first-child { margin-top: 0; }
+
+        .legal-content p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .legal-content ul {
+            margin-left: 25px;
+            margin-bottom: 20px;
+            color: var(--text-muted);
+        }
+
+        .legal-content li {
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        .info-box {
+            background: rgba(0, 225, 255, 0.03);
+            border: 1px dashed var(--accent-blue);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            background: rgba(7, 9, 15, 0.8);
+            margin-top: 80px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .legal-container { margin-top: 100px; padding: 0 20px; }
+            .legal-header h1 { font-size: 2rem; }
+            .legal-content { padding: 30px; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-glow"></div>
+
+    <nav>
+        <a href="index.html" class="logo-container">
+            <img src="logo/gamenest.ico" alt="GameNest Logo" />
+            GameNest
+        </a>
+        <a href="index.html" class="nav-back-btn">
+            <i class="fa-solid fa-arrow-left"></i> Back to Home
+        </a>
+    </nav>
+
+    <div class="legal-container">
+        <div class="legal-header">
+            <h1>Privacy Policy</h1>
+            <p>Data Processing & Privacy Standard</p>
+            <p style="font-size: 0.95rem; margin-top: 15px;">Last Updated: June 15, 2026</p>
+        </div>
+
+        <div class="legal-content">
+            <h2>1. OVERVIEW</h2>
+            <p>GameNest ("we," "us," or "our") values your privacy. This Privacy Policy describes how information is handled when you download, install, or use the GameNest Launcher ("Software").</p>
+
+            <h2>2. LOCAL DATA PROCESSING (ZERO EXFILTRATION)</h2>
+            <p>The fundamental operation of the Software relies on interacting with your local device environment. We draw a strict line between local processing and data transmission:</p>
+            
+            <div class="info-box">
+                <p style="color: var(--text-main); font-weight: 600; margin-bottom: 5px;">Directory Scanning:</p>
+                <p style="margin: 0;">To identify installed games and populate your local launcher dashboard, the Software may scan local file paths and installation directories on your hard drive. This data is processed strictly in-memory on your local machine. It is never uploaded, stored, or transmitted to GameNest or any third party.</p>
+            </div>
+
+            <div class="info-box">
+                <p style="color: var(--text-main); font-weight: 600; margin-bottom: 5px;">Memory Inspection/Modification:</p>
+                <p style="margin: 0;">Certain features interact with the volatile memory (RAM) of locally running processes to facilitate modifications. This data remains entirely local to your device. GameNest does not collect, log, review, or transmit the contents of your device's memory or any gameplay telemetry related to these actions.</p>
+            </div>
+
+            <h2>3. TECHNICAL DATA COLLECTED BY INFRASTRUCTURE</h2>
+            <p>Technical information may be automatically processed by our hosting and infrastructure providers for security, performance, and abuse-prevention purposes. Such information may include:</p>
+            <ul>
+                <li>IP addresses</li>
+                <li>Browser information</li>
+                <li>Request timestamps</li>
+                <li>Diagnostic and connection data</li>
+            </ul>
+            <p>GameNest does not independently collect, store, or maintain these server logs. Any such processing is performed by third-party hosting providers in accordance with their own privacy practices and retention policies.</p>
+
+            <h2>4. DATA RETENTION & SECURITY</h2>
+            <p><strong>Retention:</strong> Any technical server logs processed by our hosting or infrastructure providers are retained in accordance with the respective provider's retention policies and only as long as necessary for security, operational, and legal purposes.</p>
+            <p><strong>Security:</strong> We employ industry-standard administrative, technical, and physical security measures designed to protect information against unauthorized access, loss, or alteration. However, no method of transmission over the Internet or electronic storage can be guaranteed to be completely secure.</p>
+
+            <h2>5. THIRD-PARTY DISCLOSURE</h2>
+            <p>GameNest does not sell, rent, lease, or trade any personal data or technical identifiers. We may disclose technical information only:</p>
+            <ul>
+                <li>To trusted third-party service providers (such as web hosting and security mitigation providers) operating strictly under data processing instructions;</li>
+                <li>If required to do so by a binding legal obligation, court order, or valid government request.</li>
+            </ul>
+
+            <h2>6. INTERNATIONAL TRANSFERS & GDPR / CCPA COMPLIANCE</h2>
+            <p>Where the European Union's General Data Protection Regulation (GDPR), the California Consumer Privacy Act (CCPA), or similar global frameworks apply:</p>
+            <ul>
+                <li><strong>Your Rights:</strong> You may have the right to request access to, correction of, or deletion of any technical identifiers (such as IP addresses) logged by our web services.</li>
+                <li><strong>Data Location:</strong> Infrastructure logs may be transferred to and maintained on servers located outside of your state, province, or country, where data protection laws may differ.</li>
+            </ul>
+
+            <h2>7. CHILDREN'S PRIVACY</h2>
+            <p>The Software is not intended for or directed toward individuals under the age of thirteen (13) (or the minimum legal age for data consent in your jurisdiction). We do not knowingly collect personal data from children. If we discover that a child has provided us with personal information in violation of applicable laws, we will purge it immediately.</p>
+
+            <h2>8. CONTACT INFORMATION</h2>
+            <p>For any legal or privacy-related inquiries regarding this Privacy Policy, you may contact us at:</p>
+            <p><strong>Email:</strong> <a href="mailto:lulhut86@gmail.com" style="color: var(--accent-blue); text-decoration: underline;">lulhut86@gmail.com</a></p>
+
+            <p style="margin-top: 50px; padding-top: 30px; border-top: 1px solid var(--glass-border); font-size: 0.9rem; color: var(--text-muted);">
+                GameNest © 2026 | Safe. Transparent. Local.
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 GameNest. All rights reserved.</p>
+        <p style="margin-top: 10px;">Developed in the United States.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GameNest | Memory Injector Guide</title>
+
+    <link rel="icon" type="image/x-icon" href="logo/gamenest.ico" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Poppins:wght@400;600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <style>
+        :root {
+            --bg-darken: #030508;
+            --bg-card: rgba(10, 12, 22, 0.7);
+            --neon-cyan: #00f0ff;
+            --neon-pink: #ff0055;
+            --neon-green: #39ff14;
+            --text-main: #f1f5f9;
+            --text-muted: #64748b;
+            --cyber-border: rgba(0, 240, 255, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: var(--bg-darken);
+            color: var(--text-main);
+            overflow-x: hidden;
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: center;
+        }
+
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 0, 85, 0.05), transparent 60%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        nav {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            padding: 30px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: "Poppins", sans-serif;
+            font-weight: 800;
+            font-size: 1.6rem;
+            letter-spacing: 2px;
+            color: #fff;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--neon-cyan);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo img {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+        }
+
+        .back-btn {
+            color: var(--text-muted);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            border: 1px solid var(--cyber-border);
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.02);
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            color: var(--neon-cyan);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+            transform: translateX(-5px);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px 5% 60px 5%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        header h1 {
+            font-family: "Poppins", sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #fff, var(--neon-cyan), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .warning-banner {
+            background: rgba(255, 0, 85, 0.1);
+            border: 1px dashed var(--neon-pink);
+            padding: 15px 25px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            max-width: 800px;
+            margin: 0 auto 50px auto;
+            color: #ffcbd8;
+            font-size: 0.95rem;
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.05);
+            line-height: 1.5;
+        }
+
+        .warning-banner i {
+            color: var(--neon-pink);
+            font-size: 1.4rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; text-shadow: 0 0 10px var(--neon-pink); }
+            100% { opacity: 0.5; }
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        @media (max-width: 1100px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .video-wrapper {
+            position: sticky;
+            top: 40px;
+            background: var(--bg-card);
+            border: 2px solid var(--cyber-border);
+            border-radius: 24px;
+            padding: 15px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 30px rgba(0, 240, 255, 0.05);
+            backdrop-filter: blur(15px);
+        }
+
+        .video-hud {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 15px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--neon-cyan);
+        }
+
+        .hud-dots {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+        .hud-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+        }
+        .hud-dot.active { background: var(--neon-pink); animation: pulse 1s infinite;}
+
+        .video-container {
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            aspect-ratio: 16/9;
+            background: #000;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(3, 5, 8, 0.7);
+            backdrop-filter: blur(4px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-overlay:hover .play-btn {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+        }
+
+        .play-btn {
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-family: "Poppins", sans-serif;
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+
+        .play-btn i {
+            font-size: 1.4rem;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .steps-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .step-card {
+            background: rgba(15, 19, 32, 0.5);
+            border: 1px solid var(--cyber-border);
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            gap: 25px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .step-card:hover {
+            border-color: var(--neon-cyan);
+            background: rgba(15, 19, 32, 0.8);
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: -10px 10px 30px rgba(0, 240, 255, 0.03);
+        }
+
+        .step-card.active-step {
+            border-color: var(--neon-pink);
+            background: rgba(255, 0, 85, 0.02);
+            box-shadow: 0 0 30px rgba(255, 0, 85, 0.05);
+        }
+
+        .step-num {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1;
+            color: rgba(255, 255, 255, 0.05);
+            transition: color 0.3s;
+        }
+
+        .step-card:hover .step-num {
+            color: var(--neon-cyan);
+        }
+        .step-card.active-step .step-num {
+            color: var(--neon-pink);
+        }
+
+        .step-content h3 {
+            font-family: "Poppins", sans-serif;
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .step-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .code-inline {
+            font-family: 'Share Tech Mono', monospace;
+            background: rgba(0,0,0,0.4);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--neon-cyan);
+            font-size: 0.9rem;
+            border: 1px solid rgba(0,240,255,0.1);
+        }
+
+        .app-simulator {
+            margin-top: 30px;
+            background: #0d111a;
+            border-radius: 16px;
+            border: 1px solid #222836;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
+        }
+
+        .sim-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #1f2635;
+            padding-bottom: 10px;
+        }
+        .sim-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #8a99ad;
+        }
+        .sim-status {
+            font-size: 0.7rem;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 4px;
+            background: rgba(76, 175, 80, 0.1);
+            color: #4CAF50;
+            border: 1px solid rgba(76, 175, 80, 0.2);
+        }
+        .sim-input {
+            width: 100%;
+            background: #07090f;
+            border: 1px solid #222836;
+            padding: 10px 15px;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            outline: none;
+            transition: border 0.3s;
+        }
+        .sim-input:focus { border-color: #3b82f6; }
+        .sim-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .sim-btn {
+            background: #1e2538;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: background 0.2s;
+        }
+        .sim-btn.primary { background: #3b82f6; }
+        .sim-btn.danger { background: #ef4444; }
+        .sim-btn:hover { opacity: 0.9; }
+        
+        .sim-console {
+            background: #05070a;
+            border-radius: 6px;
+            padding: 12px;
+            height: 100px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.8rem;
+            color: #4CAF50;
+            overflow-y: auto;
+            border: 1px solid #151b26;
+        }
+
+        footer {
+            margin-top: 100px;
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid rgba(255,255,255,0.03);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cyber-grid"></div>
+
+    <nav>
+        <div class="logo">
+            <img src="logo/gamenest.ico">
+            GameNest
+        </div>
+        <a href="/" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i> Launcher Homepage
+        </a>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>Injector Guide</h1>
+            <p>Learn how to manipulate singleplayer game values live in under 60 seconds.</p>
+        </header>
+
+        <div class="warning-banner">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <div>
+                <strong>IMPORTANT NOTICE:</strong> This tool relies on memory scanning (RAM injection). It exclusively works in <strong>Singleplayer</strong> or on locally hosted Co-op servers. Do not attempt to use it in online multiplayer matches.
+            </div>
+        </div>
+
+        <div class="main-grid">
+            
+            <div class="steps-container">
+                
+                <div class="step-card active-step" onclick="highlightStep(1)">
+                    <div class="step-num">01</div>
+                    <div class="step-content">
+                        <h3>Launch Game & Attach</h3>
+                        <p>Launch your desired game normally via GameNest. When opening the Memory Editor, the injector will automatically attempt to hook into the game's Process IDs (<span class="code-inline">PIDs</span>). If you see <span style="color:var(--neon-green)">Attached</span> in the top right, the connection is established.</p>
+                    </div>
+                </div>
+
+                <div class="step-card" onclick="highlightStep(2)">
+                    <div class="step-num">02</div>
+                    <div class="step-content">
+                        <h3>The "First Scan"</h3>
+                        <p>Check the game for the value you want to change (e.g., your current gold: <span class="code-inline">100</span>). Type exactly this number into the top input field of the injector and click <strong>FIRST SCAN</strong>. The tool will now search the entire RAM for this number.</p>
+                    </div>
+                </div>
+
+                <div class="step-card" onclick="highlightStep(3)">
+                    <div class="step-num">03</div>
+                    <div class="step-content">
+                        <h3>Alter the In-Game Value</h3>
+                        <p>Go back into the game and change this value briefly. For example, buy an item so your gold drops from 100 to <span class="code-inline">85</span>. This is extremely important so we can filter out the correct memory address.</p>
+                    </div>
+                </div>
+
+                <div class="step-card" onclick="highlightStep(4)">
+                    <div class="step-num">04</div>
+                    <div class="step-content">
+                        <h3>Filter & Overwrite</h3>
+                        <p>Enter the new value (<span class="code-inline">85</span>) and press <strong>NEXT SCAN</strong>. Repeat this until only a few matches remain. Now type your desired value at the bottom (e.g., <span class="code-inline">999999</span>) and click <strong>OVERWRITE</strong>. Done!</p>
+                    </div>
+                </div>
+
+                <div class="app-simulator">
+                    <div class="sim-header">
+                        <span class="sim-title">MEMORY INJECTOR</span>
+                        <span class="sim-status" id="sim-status-tag">Attached (1 PID)</span>
+                    </div>
+                    <input type="text" class="sim-input" id="sim-input-val" placeholder="Enter current in-game value..." value="100">
+                    <div class="sim-buttons">
+                        <button class="sim-btn primary" onclick="simFirstScan()">First Scan</button>
+                        <button class="sim-btn" onclick="simNextScan()">Next Scan</button>
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-bottom: 12px;">
+                        <input type="text" class="sim-input" id="sim-write-val" placeholder="Desired value..." style="margin:0;" value="999999">
+                        <button class="sim-btn danger" style="white-space: nowrap;" onclick="simOverwrite()">Overwrite</button>
+                    </div>
+                    <div class="sim-console" id="sim-console-log">
+                        > Initialized Auto-Type Scanner for your Game.<br>
+                        > Ready for First Scan.
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="video-wrapper">
+                <div class="video-hud">
+                    <div class="hud-dots">
+                        <div class="hud-dot active"></div>
+                        <div class="hud-dot"></div>
+                        <div class="hud-dot"></div>
+                    </div>
+                    <span>LIVE_TUTORIAL.MP4 // STREAMING</span>
+                    <span style="color: var(--neon-pink)">1080P</span>
+                </div>
+                
+                <div class="video-container" id="video-container">
+                    <div class="video-overlay" id="play-overlay">
+                        <div class="play-btn">
+                            <i class="fa-solid fa-play"></i> START TUTORIAL
+                        </div>
+                    </div>
+
+                    <video id="tutorial-video" controls>
+                        <source src="https://s0srox08ux8jruig.public.blob.vercel-storage.com/0526%281%29.mp4" type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 GameNest Engineering. All rights reserved. Hack responsibly.</p>
+    </footer>
+
+    <script>
+        const overlay = document.getElementById('play-overlay');
+        const video = document.getElementById('tutorial-video');
+
+        overlay.addEventListener('click', () => {
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 300);
+            video.volume = 1.0;
+            video.play();
+        });
+
+        function highlightStep(stepNum) {
+            const cards = document.querySelectorAll('.step-card');
+            cards.forEach((card, idx) => {
+                if (idx === stepNum - 1) {
+                    card.classList.add('active-step');
+                } else {
+                    card.classList.remove('active-step');
+                }
+            });
+        }
+
+        const consoleLog = document.getElementById('sim-console-log');
+        
+        function logToSim(text, color="#aaaaaa") {
+            consoleLog.innerHTML += `<br><span style="color:${color}">> ${text}</span>`;
+            consoleLog.scrollTop = consoleLog.scrollHeight;
+        }
+
+        function simFirstScan() {
+            const val = document.getElementById('sim-input-val').value;
+            if(!val) return;
+            logToSim(`Starting Smart Scan for '${val}'...`);
+            setTimeout(() => {
+                logToSim(`Success: 420 matches found in RAM.`, '#4CAF50');
+                highlightStep(3);
+            }, 600);
+        }
+
+        function simNextScan() {
+            const val = document.getElementById('sim-input-val').value;
+            if(!val) return;
+            logToSim(`Filtering addresses by new value '${val}'...`);
+            setTimeout(() => {
+                logToSim(`Filter complete: 1 address remaining.`, '#00f0ff');
+                highlightStep(4);
+            }, 500);
+        }
+
+        function simOverwrite() {
+            const writeVal = document.getElementById('sim-write-val').value;
+            if(!writeVal) return;
+            logToSim(`Injecting desired value '${writeVal}' into memory address...`);
+            setTimeout(() => {
+                logToSim(`SUCCESS: Value manipulated in-game!`, '#39ff14');
+            }, 700);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "1.0.2": {
+    "content": [
+      "The launcher has become a redesign",
+      "The update process has been improved",
+      "Bug fixes and performance improvements"
+    ],
+    "required": false
+  },
+  "1.0.1": {
+    "content": [
+      "Improved the update process, making it more efficient and reliable.",
+      "The launcher now starts twice as fast."
+    ],
+    "required": true
+  }
+}
