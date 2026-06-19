@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GameNest | Update History</title>
+
+    <link rel="icon" type="image/x-icon" href="logo/gamenest_transparent.ico" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <style>
+        :root {
+            --bg-dark: #07090f;
+            --bg-card: rgba(20, 24, 34, 0.4);
+            --accent-blue: #00e1ff;
+            --accent-purple: #7000ff;
+            --accent-red: #ff3366;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.06);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        html {
+            scrollbar-gutter: stable;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3 {
+            font-family: "Poppins", sans-serif;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .bg-glow {
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(
+                circle,
+                rgba(112, 0, 255, 0.08) 0%,
+                rgba(0, 225, 255, 0.03) 50%,
+                transparent 70%
+            );
+            top: -150px;
+            right: -100px;
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(80px);
+            pointer-events: none;
+        }
+
+        .bg-glow-left {
+            left: -200px;
+            top: 40%;
+            background: radial-gradient(
+                circle,
+                rgba(0, 225, 255, 0.06) 0%,
+                rgba(112, 0, 255, 0.02) 50%,
+                transparent 70%
+            );
+            filter: blur(100px);
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(7, 9, 15, 0.75);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(to right, #fff, var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-container img {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+        }
+
+        .btn-back {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px 24px;
+            border-radius: 8px;
+            color: var(--text-main);
+            font-weight: 500;
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(0, 225, 255, 0.3);
+            box-shadow: 0 0 20px rgba(0, 225, 255, 0.1);
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            margin: 140px auto 60px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .header-section h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 15px;
+            background: linear-gradient(to bottom, #ffffff 40%, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-section p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .history-timeline {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .update-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 35px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .update-card:hover {
+            border-color: rgba(112, 0, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .version-tag {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .version-tag span {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .badge-status {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 6px 14px;
+            border-radius: 50px;
+        }
+
+        .badge-required {
+            background: rgba(255, 51, 102, 0.1);
+            border: 1px solid rgba(255, 51, 102, 0.2);
+            color: var(--accent-red);
+            box-shadow: 0 0 15px rgba(255, 51, 102, 0.05);
+        }
+
+        .badge-optional {
+            background: rgba(0, 225, 255, 0.06);
+            border: 1px solid rgba(0, 225, 255, 0.15);
+            color: var(--accent-blue);
+        }
+
+        .change-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .change-list li {
+            color: #e2e8f0;
+            font-size: 1.02rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            line-height: 1.5;
+        }
+
+        .change-list li i {
+            color: var(--accent-blue);
+            font-size: 0.85rem;
+            margin-top: 6px;
+            flex-shrink: 0;
+        }
+
+        .loading-state {
+            text-align: center;
+            padding: 60px 0;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(0, 225, 255, 0.1);
+            border-top-color: var(--accent-blue);
+            border-radius: 50%;
+            animation: spin 1s infinite linear;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .error-state {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 51, 102, 0.05);
+            border: 1px solid rgba(255, 51, 102, 0.1);
+            border-radius: 16px;
+            color: #fda4af;
+        }
+
+        .error-state i {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            background: rgba(7, 9, 15, 0.8);
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                margin-top: 120px;
+            }
+
+            .header-section h1 {
+                font-size: 2.2rem;
+            }
+
+            .update-card {
+                padding: 25px;
+            }
+
+            .version-tag {
+                font-size: 1.5rem;
+            }
+
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow"></div>
+    <div class="bg-glow bg-glow-left"></div>
+
+    <nav>
+        <div class="logo-container">
+            <img src="logo/gamenest.ico" alt="GameNest" />
+            GameNest
+        </div>
+        <a href="index.html" class="btn-back">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to Home
+        </a>
+    </nav>
+
+    <main class="container">
+        <section class="header-section">
+            <h1>Update History</h1>
+            <p>Explore the release notes, performance updates, and recent changes made to the GameNest launcher.</p>
+        </section>
+
+        <div id="timeline-container" class="history-timeline">
+            <div class="loading-state" id="loading-view">
+                <div class="spinner"></div>
+                <p>Loading version history...</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 GameNest. All rights reserved.</p>
+    </footer>
+
+    <script>
+        async function loadChangelog() {
+            const container = document.getElementById('timeline-container');
+            const loadingView = document.getElementById('loading-view');
+
+            try {
+                const response = await fetch('Updates.json');
+                if (!response.ok) {
+                    throw new Error('Failed to retrieve update configuration.');
+                }
+                
+                const data = await response.json();
+                container.innerHTML = '';
+
+                Object.keys(data).forEach(version => {
+                    const updateInfo = data[version];
+                    
+                    const card = document.createElement('div');
+                    card.className = 'update-card';
+
+                    const cardHeader = document.createElement('div');
+                    cardHeader.className = 'card-header';
+
+                    const versionTag = document.createElement('div');
+                    versionTag.className = 'version-tag';
+                    versionTag.innerHTML = `Version <span>${version}</span>`;
+
+                    const badge = document.createElement('span');
+                    if (updateInfo.required) {
+                        badge.className = 'badge-status badge-required';
+                        badge.textContent = 'Mandatory Update';
+                    } else {
+                        badge.className = 'badge-status badge-optional';
+                        badge.textContent = 'Optional Update';
+                    }
+
+                    cardHeader.appendChild(versionTag);
+                    cardHeader.appendChild(badge);
+
+                    const changeList = document.createElement('ul');
+                    changeList.className = 'change-list';
+
+                    updateInfo.content.forEach(text => {
+                        const listItem = document.createElement('li');
+                        listItem.innerHTML = `<i class="fa-solid fa-circle-right"></i><div>${text}</div>`;
+                        changeList.appendChild(listItem);
+                    });
+
+                    card.appendChild(cardHeader);
+                    card.appendChild(changeList);
+                    container.appendChild(card);
+                });
+
+            } catch (error) {
+                if (loadingView) {
+                    loadingView.style.display = 'none';
+                }
+                container.innerHTML = `
+                    <div class="error-state">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <h3>Unable to load update records</h3>
+                        <p style="margin-top: 10px; opacity: 0.8;">Please ensure the data source is accessible and refresh the page.</p>
+                    </div>
+                `;
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', loadChangelog);
+    </script>
+</body>
+</html>
